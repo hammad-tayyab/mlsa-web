@@ -9,6 +9,7 @@
 /* ---- Page shell ---- */
 html {
   background-color: var(--night-0);
+  zoom: 0.8;
 }
 
 body {

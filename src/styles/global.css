@@ -27,13 +27,13 @@ body {
   padding-inline: var(--grid-margin);
 }
 
-/* Column spans */
+/* Column spans — content kept in left ~60-65% on desktop so text never overlaps the tower */
 .col-full { grid-column: 1 / -1; }
-.col-wide { grid-column: 2 / -2; }
-.col-content { grid-column: 3 / -3; }
-.col-narrow { grid-column: 4 / -4; }
+.col-wide { grid-column: 1 / 10; }
+.col-content { grid-column: 1 / 8; }
+.col-narrow { grid-column: 1 / 7; }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .col-wide,
   .col-content,
   .col-narrow { grid-column: 1 / -1; }
@@ -42,7 +42,6 @@ body {
 /* ---- Section base ---- */
 .scene {
   position: relative;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -54,9 +53,9 @@ body {
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
-  padding: var(--space-sm) var(--space-lg);
-  font-family: var(--font-display);
-  font-size: var(--text-sm);
+  padding: 8px 20px;
+  font-family: var(--font-pixel);
+  font-size: clamp(16px, 1.05rem, 18px);
   font-weight: 600;
   letter-spacing: 0.02em;
   border-radius: 4px;

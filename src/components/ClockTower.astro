@@ -216,3 +216,35 @@ const { class: className = '' } = Astro.props;
   }
 </style>
 
+<script>
+  import { TowerChime } from '../scripts/audio';
+
+  const chime = new TowerChime();
+  const tower = document.getElementById('hero-clock-tower');
+
+  if (tower) {
+    let isSpinning = false;
+    tower.addEventListener('click', () => {
+      chime.play();
+      if (!isSpinning) {
+        isSpinning = true;
+        const hourHand = document.getElementById('clock-hour-hand');
+        const minHand = document.getElementById('clock-minute-hand');
+        if (hourHand && minHand) {
+          hourHand.dataset.easterEggActive = 'true';
+          hourHand.style.transition = 'transform 2.2s cubic-bezier(0.2, 0.8, 0.2, 1)';
+          minHand.style.transition = 'transform 2.2s cubic-bezier(0.2, 0.8, 0.2, 1)';
+          hourHand.style.transform = 'rotate(930deg)';
+          minHand.style.transform = 'rotate(2160deg)';
+          setTimeout(() => {
+            hourHand.style.transition = 'transform 0.8s ease';
+            minHand.style.transition = 'transform 0.8s ease';
+            delete hourHand.dataset.easterEggActive;
+            isSpinning = false;
+          }, 2400);
+        }
+      }
+    });
+  }
+</script>
+

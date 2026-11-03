@@ -56,7 +56,7 @@
   --space-xl: clamp(2rem, 1.5rem + 2.5vw, 4rem);
   --space-2xl: clamp(3rem, 2rem + 5vw, 6rem);
   --space-3xl: clamp(4rem, 3rem + 5vw, 8rem);
-  --space-section: clamp(6rem, 4rem + 10vw, 12rem);
+  --space-section: clamp(48px, 8vh, 96px);
 
   /* ---- Grid ---- */
   --grid-columns: 12;

@@ -6,10 +6,10 @@ import About from '../components/About.astro';
 import Projects from '../components/Projects.astro';
 import Events from '../components/Events.astro';
 import Podcast from '../components/Podcast.astro';
-import Team from '../components/Team.astro';
 import Blog from '../components/Blog.astro';
 import Join from '../components/Join.astro';
 import Footer from '../components/Footer.astro';
+import ClockTower from '../components/ClockTower.astro';
 
 // Gather JSON-LD for events, episodes
 import eventsData from '../content/events.json';
@@ -74,16 +74,60 @@ const allJsonLd = [...eventJsonLd, ...episodeJsonLd, ...postJsonLd];
 <BaseLayout jsonLd={allJsonLd}>
   <Nav />
 
+  <!-- Fixed Clock Tower Background Layer on the Right Side of the Viewport -->
+  <aside class="fixed-tower-stage" aria-label="GIKI Clock Tower">
+    <ClockTower class="fixed-tower" />
+  </aside>
+
   <main>
     <Hero />
     <About />
     <Projects />
     <Events />
     <Podcast />
-    <Team />
     <Blog />
     <Join />
   </main>
 
   <Footer />
 </BaseLayout>
+
+<style>
+  .fixed-tower-stage {
+    position: fixed;
+    right: clamp(16px, 4vw, 70px);
+    bottom: 0;
+    z-index: 25; /* below content which has z-index 100 */
+    pointer-events: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    height: 100vh;
+    max-width: 360px;
+    width: 32vw;
+    transition: opacity var(--duration-normal) var(--ease-out);
+  }
+
+  .fixed-tower {
+    max-height: 84vh;
+    width: auto;
+  }
+
+  @media (max-width: 900px) {
+    .fixed-tower-stage {
+      right: 2%;
+      max-width: 200px;
+      width: 42vw;
+      opacity: 0.35;
+      z-index: 10;
+    }
+
+    .fixed-tower {
+      max-height: 50vh;
+    }
+  }
+</style>
+
+<script>
+  import '../scripts/scroll-engine';
+</script>

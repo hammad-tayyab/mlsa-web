@@ -7,7 +7,6 @@ import WinCard from './WinCard.astro';
 <section class="scene podcast" id="podcast" aria-label="Podcast">
   <div class="podcast__header grid">
     <div class="col-content">
-      <span class="label">2:00 AM</span>
       <h2>Logikal Podcast.</h2>
       <p class="podcast__subtitle">Late-night studio conversations on tech, startups, and campus life at GIKI.</p>
     </div>
@@ -112,12 +111,15 @@ import WinCard from './WinCard.astro';
 
   .ep-badge {
     color: var(--ms-blue);
-    font-size: 11px;
-    letter-spacing: 0.05em;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0.02em;
   }
 
   .ep-date {
-    font-size: var(--text-xs);
+    font-size: 15px;
     color: var(--text-muted);
   }
 
@@ -136,7 +138,10 @@ import WinCard from './WinCard.astro';
   }
 
   .episode-guest {
-    font-size: 11px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: none;
     color: var(--text-muted);
   }
 
@@ -205,8 +210,10 @@ import WinCard from './WinCard.astro';
   }
 
   .btn-sm {
-    padding: 4px 12px;
-    font-size: var(--text-xs);
+    padding: 6px 14px;
+    font-family: var(--font-pixel);
+    font-size: 16px;
+    font-weight: 600;
   }
 </style>
 

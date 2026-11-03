@@ -90,7 +90,7 @@ const { class: className = '' } = Astro.props;
   }
 
   /* Hide on touch devices */
-  @media (hover: none) and (pointer: coarse) {
+  @media (pointer: coarse) {
     .custom-cursor-container {
       display: none !important;
     }
@@ -105,4 +105,3 @@ const { class: className = '' } = Astro.props;
     new CustomCursor(cursorEl);
   }
 </script>
-

@@ -33,7 +33,7 @@ const navLinks = [
       </a>
     </div>
 
-    <button class="nav__menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+    <button type="button" class="nav__menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <line x1="3" y1="6" x2="21" y2="6" />
         <line x1="3" y1="12" x2="21" y2="12" />
@@ -186,3 +186,24 @@ const navLinks = [
     }
   }
 </style>
+
+<script>
+  const menuButton = document.querySelector<HTMLButtonElement>('.nav__menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (menuButton && mobileMenu) {
+    const setMenuOpen = (open: boolean) => {
+      menuButton.setAttribute('aria-expanded', String(open));
+      menuButton.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      mobileMenu.setAttribute('aria-hidden', String(!open));
+    };
+
+    menuButton.addEventListener('click', () => {
+      setMenuOpen(menuButton.getAttribute('aria-expanded') !== 'true');
+    });
+
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setMenuOpen(false));
+    });
+  }
+</script>

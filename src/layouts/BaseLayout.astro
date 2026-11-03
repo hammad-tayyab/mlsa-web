@@ -59,7 +59,9 @@ const allJsonLd = jsonLd ? [orgJsonLd, ...(Array.isArray(jsonLd) ? jsonLd : [jso
   <link rel="preload" href="/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
   <SEO
     title={title}

@@ -1,0 +1,130 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+
+const socials = [
+  {
+    name: 'Instagram',
+    url: 'https://www.instagram.com/microsoftclubgiki/',
+    icon: 'instagram',
+    hoverColor: 'var(--ms-red)',
+  },
+  {
+    name: 'LinkedIn',
+    url: 'https://www.linkedin.com/company/microsoft-club-giki/',
+    icon: 'linkedin',
+    hoverColor: 'var(--ms-blue)',
+  },
+  {
+    name: 'YouTube',
+    url: 'https://www.youtube.com/@LOGIKALGIKI',
+    icon: 'youtube',
+    hoverColor: 'var(--ms-red)',
+  },
+  {
+    name: 'Linktree',
+    url: 'https://linktr.ee/MS_clubgiki',
+    icon: 'linktree',
+    hoverColor: 'var(--ms-green)',
+  },
+];
+---
+
+<div class={`social-icons ${className}`}>
+  {socials.map((social) => (
+    <a
+      href={social.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="social-icon-link"
+      aria-label={`Microsoft Club GIKI on ${social.name}`}
+      style={`--hover-accent: ${social.hoverColor};`}
+    >
+      {social.icon === 'instagram' && (
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+        </svg>
+      )}
+      {social.icon === 'linkedin' && (
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+          <rect x="2" y="9" width="4" height="12"></rect>
+          <circle cx="4" cy="4" r="2"></circle>
+        </svg>
+      )}
+      {social.icon === 'youtube' && (
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+          <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"></polygon>
+        </svg>
+      )}
+      {social.icon === 'linktree' && (
+        <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2v20"></path>
+          <path d="M12 2l4 4-4 4"></path>
+          <path d="M12 2L8 6l4 4"></path>
+          <path d="M12 10l6 4-6 4"></path>
+          <path d="M12 10L6 14l6 4"></path>
+        </svg>
+      )}
+    </a>
+  ))}
+</div>
+
+<style>
+  .social-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(12px, 2vw, 20px);
+    margin-inline: auto;
+  }
+
+  .social-icon-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    color: var(--text-muted);
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: transform var(--duration-fast) var(--ease-spring),
+                color var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out),
+                background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .icon-svg {
+    width: 20px;
+    height: 20px;
+    transition: transform var(--duration-fast) var(--ease-spring);
+  }
+
+  .social-icon-link:hover {
+    color: var(--hover-accent, var(--white));
+    border-color: var(--hover-accent, var(--white));
+    background-color: rgba(255, 255, 255, 0.07);
+    transform: translateY(-2px);
+  }
+
+  .social-icon-link:hover .icon-svg {
+    transform: scale(1.1);
+  }
+
+  .social-icon-link:focus-visible {
+    outline: 2px solid var(--ms-blue);
+    outline-offset: 2px;
+  }
+
+  .social-icon-link:active {
+    transform: translateY(0);
+  }
+</style>
+

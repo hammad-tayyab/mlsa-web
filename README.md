@@ -124,3 +124,25 @@ astro dev stop
 # Production build
 npm run build
 ```
+
+## Manual Vercel deployment
+
+This project is a static Astro site and does not require a GitHub Actions workflow
+or a Vercel configuration file.
+
+1. Push the repository to GitHub (or make sure the latest changes are already there).
+2. Sign in to [Vercel](https://vercel.com) and select **Add New Project**.
+3. Import the `hammad-tayyab/mlsa-web` repository and authorize access if prompted.
+4. Keep the detected framework as **Astro**. Confirm these settings:
+   - **Build command:** `npm run build`
+   - **Output directory:** `dist`
+   - **Install command:** `npm install`
+5. Select **Deploy** and wait for the build to finish.
+6. Open the generated `.vercel.app` URL to verify the site.
+7. To use `mlsaclubgiki.tech`, open the project’s **Settings → Domains**, add the
+   domain, and follow Vercel’s DNS instructions at your domain registrar.
+
+Future pushes to the connected repository can still create Vercel deployments,
+but GitHub Actions is no longer involved. To deploy without connecting GitHub,
+use **Deploy → Upload** in Vercel or run `npx vercel` locally after installing
+the Vercel CLI.

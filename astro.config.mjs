@@ -1,8 +1,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://hammad-tayyab.github.io',
-  base: '/mlsa-web',
+  site: 'https://mlsaclubgiki.tech',
   output: 'static',
   build: {
     inlineStylesheets: 'auto',

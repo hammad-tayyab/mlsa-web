@@ -28,6 +28,10 @@ body {
   position: relative;
 }
 
+body.menu-open {
+  overflow: hidden;
+}
+
 main {
   position: relative;
   z-index: 1;

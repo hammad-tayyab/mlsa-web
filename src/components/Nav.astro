@@ -152,6 +152,11 @@ const navLinks = [
   }
 
   @media (max-width: 768px) {
+    .nav {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
     .nav__links {
       display: none;
     }
@@ -165,10 +170,18 @@ const navLinks = [
       display: flex;
       position: fixed;
       inset: 0;
+      width: 100vw;
+      min-height: 100dvh;
       background: var(--night-0);
-      z-index: calc(var(--z-nav) + 1);
+      z-index: 1;
       align-items: center;
       justify-content: center;
+      pointer-events: auto;
+    }
+
+    .nav__inner {
+      position: relative;
+      z-index: 2;
     }
 
     .nav__mobile-inner {
@@ -188,22 +201,34 @@ const navLinks = [
 </style>
 
 <script>
-  const menuButton = document.querySelector<HTMLButtonElement>('.nav__menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
+  const setMenuOpen = (open: boolean) => {
+    const menuButton = document.querySelector<HTMLButtonElement>('.nav__menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (!menuButton || !mobileMenu) return;
 
-  if (menuButton && mobileMenu) {
-    const setMenuOpen = (open: boolean) => {
-      menuButton.setAttribute('aria-expanded', String(open));
-      menuButton.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      mobileMenu.setAttribute('aria-hidden', String(!open));
-    };
+    menuButton.setAttribute('aria-expanded', String(open));
+    menuButton.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    mobileMenu.setAttribute('aria-hidden', String(!open));
+    document.body.classList.toggle('menu-open', open);
+  };
 
-    menuButton.addEventListener('click', () => {
-      setMenuOpen(menuButton.getAttribute('aria-expanded') !== 'true');
+  if (!document.documentElement.dataset.navMenuBound) {
+    document.documentElement.dataset.navMenuBound = 'true';
+
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+
+      if (target.closest('.nav__menu-btn')) {
+        const button = document.querySelector<HTMLButtonElement>('.nav__menu-btn');
+        setMenuOpen(button?.getAttribute('aria-expanded') !== 'true');
+      } else if (target.closest('#mobile-menu a')) {
+        setMenuOpen(false);
+      }
     });
 
-    mobileMenu.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => setMenuOpen(false));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setMenuOpen(false);
     });
   }
 </script>

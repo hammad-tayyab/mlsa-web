@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
 import WinCard from '../components/WinCard.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -10,8 +11,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   description="Restricted executive administration portal."
   noindex={true}
 >
+  <Nav />
+
   <main class="admin-page">
     <div class="admin-wrapper">
+      <a href={`${base}/`} class="btn btn-ghost admin-back">&larr; Back to website</a>
       <WinCard title="admin.exe" class="admin-window">
         <form class="admin-form" id="admin-login-form">
           <div class="admin-header">
@@ -86,6 +90,17 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   .admin-wrapper {
     width: 100%;
     max-width: 440px;
+  }
+
+  .admin-back {
+    display: inline-flex;
+    align-self: flex-start;
+    margin-bottom: var(--space-md);
+    padding: 8px 14px;
+    color: var(--text-primary);
+    border-color: var(--ms-blue);
+    background: rgba(0, 164, 239, 0.1);
+    font-size: var(--text-sm);
   }
 
   .admin-window {

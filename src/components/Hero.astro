@@ -6,6 +6,10 @@ import SkylineSVG from './SkylineSVG.astro';
   <!-- Layer 1: Abstract skyline at base -->
   <SkylineSVG />
 
+  <!-- Supplied campus illustrations layered above the abstract skyline -->
+  <img class="hero__skyline-art" src="/skyline.svg" alt="" aria-hidden="true" />
+  <img class="hero__hall-art" src="/hall.svg" alt="" aria-hidden="true" />
+
   <!-- Layer 2: Content — in left 60% so it doesn't overlap the fixed tower on the right -->
   <div class="hero__content">
     <div class="hero__text-block">
@@ -48,6 +52,30 @@ import SkylineSVG from './SkylineSVG.astro';
     margin-inline: auto;
     padding-inline: var(--grid-margin);
     pointer-events: none;
+  }
+
+  .hero__skyline-art,
+  .hero__hall-art {
+    position: absolute;
+    bottom: 0;
+    height: auto;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .hero__skyline-art {
+    left: 0;
+    width: 70%;
+    opacity: 0.85;
+    z-index: 20;
+  }
+
+  .hero__hall-art {
+    left: 50%;
+    width: 34%;
+    opacity: 0.9;
+    transform: translateX(-8%);
+    z-index: 21;
   }
 
   .hero__text-block {
@@ -111,6 +139,15 @@ import SkylineSVG from './SkylineSVG.astro';
   }
 
   @media (max-width: 768px) {
+    .hero__skyline-art {
+      width: 140%;
+      max-width: none;
+    }
+
+    .hero__hall-art {
+      display: none;
+    }
+
     .hero__ctas {
       flex-direction: column;
       width: 100%;

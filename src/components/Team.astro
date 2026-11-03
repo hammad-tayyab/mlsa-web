@@ -1,0 +1,76 @@
+---
+import members from '../content/members.json';
+---
+
+<section class="scene team" id="team" aria-label="Team">
+  <div class="team__inner grid">
+    <div class="team__header col-content">
+      <span class="label">3:00 AM</span>
+      <h2>The EC.</h2>
+    </div>
+    <div class="team__grid col-content">
+      {members.ec.map(member => (
+        <article class="team__member">
+          <div class="team__photo asset-placeholder" role="img" aria-label={`Photo of ${member.name}`}>
+            PHOTO NEEDED: {member.name}
+          </div>
+          <h3 class="team__name">{member.name}</h3>
+          <span class="team__role label">{member.role}</span>
+          {member.linkedin && (
+            <a href={member.linkedin} class="team__linkedin" target="_blank" rel="noopener noreferrer" aria-label={`${member.name} on LinkedIn`}>LinkedIn</a>
+          )}
+        </article>
+      ))}
+    </div>
+    {members.alumni.length > 0 && (
+      <div class="team__alumni col-content">
+        <h3>Alumni</h3>
+        <!-- Alumni list to be supplied -->
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .team__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .team__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+  }
+
+  .team__member {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    text-align: center;
+  }
+
+  .team__photo {
+    aspect-ratio: 3/4;
+    min-height: 220px;
+    border-radius: 4px;
+  }
+
+  .team__name {
+    font-size: var(--text-base);
+    font-weight: 600;
+    margin-top: var(--space-sm);
+  }
+
+  .team__role {
+    color: var(--text-muted);
+  }
+
+  .team__linkedin {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ms-blue);
+  }
+</style>

@@ -1,0 +1,62 @@
+---
+const socials = [
+  { label: 'Instagram', url: 'https://www.instagram.com/microsoftclubgiki/', icon: 'instagram' },
+  { label: 'LinkedIn', url: 'https://www.linkedin.com/company/microsoft-club-giki/', icon: 'linkedin' },
+  { label: 'YouTube', url: 'https://www.youtube.com/@LOGIKALGIKI', icon: 'youtube' },
+  { label: 'Linktree', url: 'https://linktr.ee/MS_clubgiki', icon: 'link' },
+];
+---
+
+<footer class="footer" id="footer">
+  <div class="footer__inner grid">
+    <div class="footer__content col-full">
+      <div class="footer__socials">
+        {socials.map(s => (
+          <a href={s.url} class="footer__social-link" target="_blank" rel="noopener noreferrer" aria-label={s.label}>
+            {s.label}
+          </a>
+        ))}
+      </div>
+      <p class="footer__copy">&copy; 2026 Microsoft Club GIKI</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding: var(--space-xl) 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .footer__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .footer__socials {
+    display: flex;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer__social-link {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .footer__social-link:hover {
+    color: var(--ms-blue);
+  }
+
+  .footer__copy {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+</style>

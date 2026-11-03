@@ -1,0 +1,123 @@
+---
+import DetailLayout from '../../layouts/DetailLayout.astro';
+import episodesData from '../../content/episodes.json';
+
+export function getStaticPaths() {
+  return episodesData.map(ep => ({
+    params: { slug: ep.slug },
+    props: { episode: ep },
+  }));
+}
+
+const { episode } = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "PodcastEpisode",
+  "name": episode.title,
+  "datePublished": episode.date,
+  "description": episode.summary,
+  "episodeNumber": episode.ep,
+  "partOfSeries": {
+    "@type": "PodcastSeries",
+    "name": "Logikal",
+    "url": "https://www.youtube.com/@LOGIKALGIKI"
+  },
+  "url": `https://mlsaclubgiki.tech/podcast/${episode.slug}`
+};
+
+const pageTitle = `EP${String(episode.ep).padStart(3, '0')} — ${episode.title} | Logikal | Microsoft Club GIKI`;
+const pageDescription = episode.summary ? episode.summary.slice(0, 160) : `Logikal Podcast Episode ${episode.ep}: ${episode.title}`;
+---
+
+<DetailLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonical={`https://mlsaclubgiki.tech/podcast/${episode.slug}`}
+  jsonLd={jsonLd}
+  backLabel="Podcast"
+  backHref="/#podcast"
+>
+  <article>
+    <span class="label">Episode {episode.ep}</span>
+    <h1>{episode.title}</h1>
+    {episode.guest && <p class="episode-guest">with {episode.guest}</p>}
+    {episode.date && <time class="mono" datetime={episode.date}>{episode.date}</time>}
+    <p>{episode.summary}</p>
+
+    {episode.youtubeId ? (
+      <div class="episode-player">
+        <img
+          src={`https://img.youtube.com/vi/${episode.youtubeId}/maxresdefault.jpg`}
+          alt={`Thumbnail for ${episode.title}`}
+          width="1280"
+          height="720"
+          loading="lazy"
+          class="episode-thumbnail"
+        />
+        <button class="episode-play-btn" data-youtube-id={episode.youtubeId} aria-label="Play episode">
+          ▶ Play
+        </button>
+      </div>
+    ) : (
+      <div class="asset-placeholder">YOUTUBE ID NEEDED: Episode {episode.ep}</div>
+    )}
+  </article>
+</DetailLayout>
+
+<style>
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  h1 {
+    font-size: var(--text-3xl);
+  }
+
+  .episode-guest {
+    font-style: italic;
+    color: var(--text-secondary);
+  }
+
+  time {
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .episode-player {
+    position: relative;
+    aspect-ratio: 16/9;
+    max-width: 800px;
+    background: var(--night-1);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .episode-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .episode-play-btn {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--white);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    cursor: pointer;
+    transition: background var(--duration-normal) var(--ease-out);
+  }
+
+  .episode-play-btn:hover {
+    background: rgba(0, 0, 0, 0.6);
+  }
+</style>
+

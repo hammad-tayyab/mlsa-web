@@ -1,0 +1,111 @@
+---
+import episodes from '../content/episodes.json';
+const latest = episodes[0];
+const others = episodes.slice(1);
+---
+
+<section class="scene podcast" id="podcast" aria-label="Podcast">
+  <div class="podcast__inner grid">
+    <div class="podcast__header col-content">
+      <span class="label">2:00 AM</span>
+      <h2>Logikal.</h2>
+      <p>The podcast where GIKI talks tech, career, and campus life.</p>
+    </div>
+
+    {latest && (
+      <article class="podcast__latest col-content">
+        <span class="label">Latest Episode</span>
+        <h3>EP{String(latest.ep).padStart(3, '0')} — {latest.title}</h3>
+        {latest.guest && <p class="podcast__guest">with {latest.guest}</p>}
+        {latest.date && <time class="mono" datetime={latest.date}>{latest.date}</time>}
+        <p>{latest.summary}</p>
+        {latest.youtubeId ? (
+          <div class="podcast__player asset-placeholder">
+            YouTube Player: {latest.youtubeId}
+          </div>
+        ) : (
+          <div class="podcast__player asset-placeholder">
+            YOUTUBE ID NEEDED: Episode {latest.ep}
+          </div>
+        )}
+      </article>
+    )}
+
+    <div class="podcast__archive col-content">
+      <h4>Archive</h4>
+      <ol class="podcast__episodes" reversed>
+        {others.map(ep => (
+          <li class="podcast__episode">
+            <a href={`/podcast/${ep.slug}`}>
+              <span class="mono">EP{String(ep.ep).padStart(3, '0')}</span>
+              <span>{ep.title}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .podcast__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .podcast__latest {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-top: var(--space-xl);
+    padding: var(--space-lg);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 4px;
+  }
+
+  .podcast__latest h3 {
+    font-size: var(--text-xl);
+  }
+
+  .podcast__guest {
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .podcast__player {
+    margin-top: var(--space-md);
+    aspect-ratio: 16/9;
+    max-width: 640px;
+  }
+
+  .podcast__archive {
+    margin-top: var(--space-xl);
+  }
+
+  .podcast__episodes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+
+  .podcast__episode a {
+    display: flex;
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: var(--text-secondary);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .podcast__episode a:hover {
+    color: var(--text-primary);
+  }
+
+  .podcast__episode .mono {
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+</style>

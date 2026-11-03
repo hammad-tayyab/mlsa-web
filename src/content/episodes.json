@@ -1,0 +1,56 @@
+[
+  {
+    "ep": 13,
+    "slug": "yahya-qureshi-cursor-ai",
+    "title": "Yahya Qureshi on Cursor AI",
+    "guest": "Yahya Qureshi",
+    "date": "2025-10-12",
+    "youtubeId": null,
+    "summary": "A conversation with Yahya Qureshi about Cursor AI and the future of AI-assisted development."
+  },
+  {
+    "ep": 12,
+    "slug": "tech-talks-arbisoft",
+    "title": "Tech Talks: Exploring Arbisoft's Creative Minds",
+    "guest": "Atif Zulfikar & Haider Zada",
+    "date": "2024-04-21",
+    "youtubeId": null,
+    "summary": "Exploring the creative minds at Arbisoft with Atif Zulfikar and Haider Zada."
+  },
+  {
+    "ep": 11,
+    "slug": "mind-matters-student-wellness",
+    "title": "Mind Matters: Conversations on Student Wellness",
+    "guest": "Iqra Siddiqui",
+    "date": "2024-02-24",
+    "youtubeId": null,
+    "summary": "A conversation about student mental health and wellness with Iqra Siddiqui."
+  },
+  {
+    "ep": 10,
+    "slug": "giki-to-silicon-valley",
+    "title": "From GIKI to Silicon Valley: A Dive into Tech",
+    "guest": null,
+    "date": null,
+    "youtubeId": null,
+    "summary": "The journey from GIKI to Silicon Valley."
+  },
+  {
+    "ep": 9,
+    "slug": "giki-chronicles-life-adventures",
+    "title": "GIKI Chronicles: Life Adventures",
+    "guest": null,
+    "date": null,
+    "youtubeId": null,
+    "summary": "Stories and adventures from life at GIKI."
+  },
+  {
+    "ep": 8,
+    "slug": "campus-to-careers-alumni",
+    "title": "From Campus to Careers: GIKI Alumni",
+    "guest": null,
+    "date": null,
+    "youtubeId": null,
+    "summary": "GIKI alumni share their journey from campus to careers."
+  }
+]

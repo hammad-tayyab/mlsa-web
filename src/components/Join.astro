@@ -1,0 +1,60 @@
+---
+import inductions from '../content/inductions.json';
+---
+
+<section class="scene join" id="join" aria-label="Join">
+  <div class="join__inner grid">
+    <div class="join__header col-content">
+      <span class="label">Sunrise</span>
+      <h2>Inductions 2026.</h2>
+    </div>
+    <div class="join__content col-content">
+      {inductions.open ? (
+        <div class="join__open">
+          <p>Applications open until <strong>{inductions.deadline}</strong>.</p>
+          <a href={inductions.applyUrl} class="btn btn-primary">Apply Now</a>
+        </div>
+      ) : (
+        <div class="join__closed">
+          <p>{inductions.note}</p>
+          <p class="join__followup">Follow us to know when we open next.</p>
+          <div class="join__socials">
+            <a href="https://www.instagram.com/microsoftclubgiki/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://www.linkedin.com/company/microsoft-club-giki/" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://www.youtube.com/@LOGIKALGIKI" class="btn btn-ghost" target="_blank" rel="noopener noreferrer">YouTube</a>
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .join__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .join__content {
+    margin-top: var(--space-xl);
+  }
+
+  .join__open,
+  .join__closed {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .join__followup {
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .join__socials {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+</style>

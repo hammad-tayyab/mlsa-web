@@ -1,0 +1,76 @@
+---
+import eventsData from '../content/events.json';
+
+const featured = eventsData.filter(e => e.status === 'featured');
+const past = eventsData.filter(e => e.status === 'past');
+const upcoming = eventsData.filter(e => e.status === 'upcoming');
+---
+
+<section class="scene events" id="events" aria-label="Events">
+  <div class="events__inner grid">
+    <div class="events__header col-content">
+      <span class="label">1:00 AM</span>
+      <h2>Events.</h2>
+    </div>
+    <div class="events__list col-content">
+      {featured.map(event => (
+        <article class="events__card events__card--featured">
+          <h3><a href={`/events/${event.slug}`}>{event.title}</a></h3>
+          <time class="mono" datetime={event.date}>{event.date}</time>
+          <p>{event.summary}</p>
+          {event.poster === null && (
+            <div class="asset-placeholder">POSTER NEEDED: {event.title}</div>
+          )}
+        </article>
+      ))}
+      {[...past, ...upcoming].map(event => (
+        <article class="events__card">
+          <h3><a href={`/events/${event.slug}`}>{event.title}</a></h3>
+          {event.date && <time class="mono" datetime={event.date}>{event.date}</time>}
+          {!event.date && <span class="mono label">Date TBD</span>}
+          <p>{event.summary}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .events__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .events__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+  }
+
+  .events__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-lg);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 4px;
+  }
+
+  .events__card--featured {
+    border-color: var(--ms-yellow);
+    background: rgba(255, 185, 0, 0.03);
+  }
+
+  .events__card h3 a {
+    color: var(--text-primary);
+    font-size: var(--text-xl);
+  }
+
+  .events__card time, .events__card .label {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+</style>

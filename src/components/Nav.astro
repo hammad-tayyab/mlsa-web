@@ -1,0 +1,159 @@
+---
+const navLinks = [
+  { label: 'Join', href: '#join' },
+  { label: 'Events', href: '#events' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Podcast', href: '#podcast' },
+  { label: 'Team', href: '#team' },
+  { label: 'Blog', href: '#blog' },
+];
+---
+
+<nav class="nav" aria-label="Main navigation">
+  <div class="nav__inner">
+    <a href="#home" class="nav__logo" aria-label="Microsoft Club GIKI — Home">
+      <!-- Four-square logo mark -->
+      <svg class="nav__logo-mark" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+        <rect x="0" y="0" width="13" height="13" fill="var(--ms-red)" />
+        <rect x="15" y="0" width="13" height="13" fill="var(--ms-green)" />
+        <rect x="0" y="15" width="13" height="13" fill="var(--ms-blue)" />
+        <rect x="15" y="15" width="13" height="13" fill="var(--ms-yellow)" />
+      </svg>
+    </a>
+
+    <div class="nav__links" role="list">
+      {navLinks.map(link => (
+        <a href={link.href} class="nav__link" role="listitem">{link.label}</a>
+      ))}
+    </div>
+
+    <span class="nav__clock mono" aria-label="In-world time">7:00 PM</span>
+
+    <button class="nav__menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="nav__mobile" aria-hidden="true">
+    <div class="nav__mobile-inner">
+      {navLinks.map(link => (
+        <a href={link.href} class="nav__mobile-link">{link.label}</a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-nav);
+    padding: var(--space-sm) var(--grid-margin);
+    background: rgba(7, 11, 26, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    max-width: var(--grid-max-width);
+    margin-inline: auto;
+  }
+
+  .nav__logo {
+    flex-shrink: 0;
+  }
+
+  .nav__links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    margin-left: auto;
+  }
+
+  .nav__link {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    transition: color var(--duration-fast) var(--ease-out);
+    position: relative;
+  }
+
+  .nav__link:hover,
+  .nav__link[aria-current="true"] {
+    color: var(--text-primary);
+  }
+
+  .nav__link[aria-current="true"]::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--ms-blue);
+  }
+
+  .nav__clock {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  .nav__menu-btn {
+    display: none;
+    color: var(--text-primary);
+  }
+
+  .nav__mobile {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .nav__links {
+      display: none;
+    }
+
+    .nav__clock {
+      margin-left: auto;
+    }
+
+    .nav__menu-btn {
+      display: block;
+    }
+
+    .nav__mobile[aria-hidden="false"] {
+      display: flex;
+      position: fixed;
+      inset: 0;
+      background: var(--night-0);
+      z-index: calc(var(--z-nav) + 1);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav__mobile-inner {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+      text-align: center;
+    }
+
+    .nav__mobile-link {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+  }
+</style>

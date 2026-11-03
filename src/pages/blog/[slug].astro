@@ -1,0 +1,104 @@
+---
+import DetailLayout from '../../layouts/DetailLayout.astro';
+import postsData from '../../content/posts.json';
+
+export function getStaticPaths() {
+  return postsData.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+const jsonLd = post.date ? {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.title,
+  "author": {
+    "@type": "Person",
+    "name": post.author
+  },
+  "datePublished": post.date,
+  "url": `https://mlsaclubgiki.tech/blog/${post.slug}`
+} : undefined;
+
+const pageTitle = `${post.title} | Blog | Microsoft Club GIKI`;
+const pageDescription = post.summary ? post.summary.slice(0, 160) : `A blog post by ${post.author}`;
+---
+
+<DetailLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonical={`https://mlsaclubgiki.tech/blog/${post.slug}`}
+  jsonLd={jsonLd}
+  backLabel="Blog"
+  backHref="/#blog"
+>
+  <article>
+    <h1>{post.title}</h1>
+    <div class="post-meta">
+      <span>by {post.author}</span>
+      {post.date && <time class="mono" datetime={post.date}>{post.date}</time>}
+    </div>
+
+    {post.tags && post.tags.length > 0 && (
+      <div class="post-tags">
+        {post.tags.map((tag: string) => (
+          <span class="post-tag mono">{tag}</span>
+        ))}
+      </div>
+    )}
+
+    {post.body ? (
+      <div class="post-body" set:html={post.body} />
+    ) : (
+      <p class="post-placeholder">Full post coming soon.</p>
+    )}
+  </article>
+</DetailLayout>
+
+<style>
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  h1 {
+    font-size: var(--text-3xl);
+  }
+
+  .post-meta {
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  .post-tags {
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+  }
+
+  .post-tag {
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  .post-body {
+    line-height: 1.8;
+    color: var(--text-secondary);
+  }
+
+  .post-placeholder {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+</style>
+

@@ -1,0 +1,71 @@
+---
+const pillars = [
+  { label: 'Workshops', color: 'var(--ms-blue)', href: '#events' },
+  { label: 'Hackathons', color: 'var(--ms-red)', href: '#events' },
+  { label: 'Projects', color: 'var(--ms-green)', href: '#projects' },
+  { label: 'Podcast', color: 'var(--ms-yellow)', href: '#podcast' },
+];
+---
+
+<section class="scene about" id="about" aria-label="About">
+  <div class="about__inner grid">
+    <div class="about__text col-content">
+      <h2>Who we are.</h2>
+      <p>Microsoft Learn Student Ambassadors at Ghulam Ishaq Khan Institute. We run workshops, hackathons, projects, and the Logikal podcast.</p>
+    </div>
+    <div class="about__pillars col-content">
+      {pillars.map(p => (
+        <a href={p.href} class="about__pillar" style={`--pillar-color: ${p.color}`}>
+          <span class="about__tile" aria-hidden="true"></span>
+          <span>{p.label}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about__inner {
+    gap: var(--space-xl);
+  }
+
+  .about__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .about__pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+  }
+
+  .about__pillar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 4px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-base);
+    color: var(--text-primary);
+    transition: border-color var(--duration-normal) var(--ease-out);
+  }
+
+  .about__pillar:hover {
+    border-color: var(--pillar-color);
+  }
+
+  .about__tile {
+    width: 16px;
+    height: 16px;
+    border-radius: var(--tile-radius);
+    background: var(--pillar-color);
+    flex-shrink: 0;
+  }
+</style>

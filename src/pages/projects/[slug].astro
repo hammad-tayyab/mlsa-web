@@ -1,0 +1,109 @@
+---
+import DetailLayout from '../../layouts/DetailLayout.astro';
+import projectsData from '../../content/projects.json';
+
+export function getStaticPaths() {
+  return projectsData.map(project => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+
+const pageTitle = `${project.title} | Microsoft Club GIKI`;
+const pageDescription = project.summary.slice(0, 160);
+---
+
+<DetailLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonical={`https://mlsaclubgiki.tech/projects/${project.slug}`}
+  backLabel="Projects"
+  backHref="/#projects"
+>
+  <article>
+    <h1>{project.title}</h1>
+    <p>{project.summary}</p>
+
+    <div class="project-section">
+      <h2>Tech Stack</h2>
+      <div class="project-stack">
+        {project.stack.map((tech: string) => (
+          <span class="project-tech mono">{tech}</span>
+        ))}
+      </div>
+    </div>
+
+    <div class="project-section">
+      <h2>Contributors</h2>
+      <ul class="project-contributors">
+        {project.contributors.map((c: string) => (
+          <li>{c}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="project-links">
+      {project.links.demo && (
+        <a href={project.links.demo} class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+          Live Demo
+        </a>
+      )}
+      {project.links.github && (
+        <a href={project.links.github} class="btn btn-ghost" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+      )}
+    </div>
+  </article>
+</DetailLayout>
+
+<style>
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  h1 {
+    font-size: var(--text-3xl);
+  }
+
+  h2 {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-sm);
+  }
+
+  .project-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .project-tech {
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  .project-contributors {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    color: var(--text-secondary);
+  }
+
+  .project-links {
+    display: flex;
+    gap: var(--space-md);
+  }
+</style>
+

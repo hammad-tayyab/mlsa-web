@@ -1,0 +1,43 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+  type?: string;
+  jsonLd?: object | object[];
+}
+
+const {
+  title = 'Microsoft Club GIKI | Tech Community at GIKI',
+  description = 'Microsoft Learn Student Ambassadors at Ghulam Ishaq Khan Institute. We run workshops, hackathons, projects, and the Logikal podcast.',
+  canonical = 'https://mlsaclubgiki.tech',
+  ogImage = '/assets/og-default.png',
+  type = 'website',
+  jsonLd,
+} = Astro.props;
+---
+
+<!-- Primary Meta -->
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<!-- Open Graph -->
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content="Microsoft Club GIKI" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<!-- JSON-LD -->
+{jsonLd && (
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+)}

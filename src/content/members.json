@@ -1,0 +1,59 @@
+{
+  "ec": [
+    {
+      "name": "Mustafa Avais",
+      "role": "President",
+      "photo": null,
+      "linkedin": null
+    },
+    {
+      "name": "Yawar Kamal",
+      "role": "Vice President",
+      "photo": null,
+      "linkedin": null
+    },
+    {
+      "name": "Muaz Nadeem",
+      "role": "Program Manager",
+      "photo": null,
+      "linkedin": null
+    },
+    {
+      "name": "Abdur Rafay",
+      "role": "Dev Director",
+      "photo": null,
+      "linkedin": null
+    },
+    {
+      "name": "Hassnain Abbas",
+      "role": "EC Member",
+      "photo": null,
+      "linkedin": null
+    },
+    {
+      "name": "Hiba Zulfiqar",
+      "role": "EC Member",
+      "photo": null,
+      "linkedin": null
+    },
+    {
+      "name": "Muhammad Bilal",
+      "role": "EC Member",
+      "photo": null,
+      "linkedin": null
+    },
+    {
+      "name": "Rabbin Batool",
+      "role": "EC Member",
+      "photo": null,
+      "linkedin": null
+    },
+    {
+      "name": "Riyan Javed",
+      "role": "EC Member",
+      "photo": null,
+      "linkedin": null
+    }
+  ],
+  "alumni": []
+}

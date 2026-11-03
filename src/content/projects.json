@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "giki-wallet",
+    "title": "GIKI Wallet",
+    "summary": "Transport ticketing system for the university, replacing a manual process.",
+    "stack": ["React", "Vite", "Tailwind CSS", "shadcn/ui", "Go", "SQLC", "Goose", "PostgreSQL", "Zustand", "TanStack Query", "Docker", "Docker Compose", "Nginx", "Microsoft Graph API", "JazzCash SDK"],
+    "contributors": ["Hamza Faraz", "Muhammad Taimoor"],
+    "links": {
+      "demo": "#",
+      "github": null
+    },
+    "thumbnail": null
+  },
+  {
+    "slug": "oric",
+    "title": "ORIC",
+    "summary": "Web portal for managing and evaluating faculty performance — professors record academic activities, admins review.",
+    "stack": ["React.js", "Django", "PostgreSQL"],
+    "contributors": ["Mian Ai Ahmed", "Mustafa Avais", "Rabbin Batool", "Rabia Yasin", "Areej Arif", "Saadia Asghar", "Talal Iqbal", "Atta Ur Rahman", "Ahmed Saeed Zaidi", "Muaz Nadeem", "Abdur Rahman Goraya"],
+    "links": {
+      "demo": null,
+      "github": "#"
+    },
+    "thumbnail": null
+  }
+]

@@ -1,0 +1,92 @@
+/* ============================================
+   MICROSOFT CLUB GIKI — DESIGN TOKENS
+   "The Clock Tower Never Sleeps"
+   ============================================ */
+
+:root {
+  /* ---- Night sky palette ---- */
+  --night-0: #070B1A;
+  --night-1: #0B1230;
+  --dusk: #2A1B5E;
+  --dawn: #FF8A3D;
+  --sun: #FFD27A;
+
+  /* ---- Microsoft four-square accents ---- */
+  --ms-red: #F25022;
+  --ms-green: #7FBA00;
+  --ms-blue: #00A4EF;
+  --ms-yellow: #FFB900;
+
+  /* ---- Neutral ---- */
+  --white: #FFFFFF;
+  --gray-100: #F5F5F5;
+  --gray-200: #E0E0E0;
+  --gray-300: #B0B0B0;
+  --gray-400: #707070;
+  --gray-500: #404040;
+  --text-primary: #F5F5F5;
+  --text-secondary: #B0B0B0;
+  --text-muted: #707070;
+
+  /* ---- Sky (interpolated by scroll) ---- */
+  --sky-current: var(--night-1);
+
+  /* ---- Typography ---- */
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body: 'Instrument Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Fluid type scale */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+  --text-base: clamp(1rem, 0.925rem + 0.375vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.375rem);
+  --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.625rem);
+  --text-2xl: clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem);
+  --text-3xl: clamp(2rem, 1.5rem + 2.5vw, 3.25rem);
+  --text-4xl: clamp(2.5rem, 1.8rem + 3.5vw, 4.5rem);
+  --text-5xl: clamp(3rem, 2rem + 5vw, 6rem);
+
+  /* ---- Spacing scale ---- */
+  --space-xs: clamp(0.25rem, 0.2rem + 0.25vw, 0.5rem);
+  --space-sm: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem);
+  --space-md: clamp(1rem, 0.8rem + 1vw, 1.5rem);
+  --space-lg: clamp(1.5rem, 1.2rem + 1.5vw, 2.5rem);
+  --space-xl: clamp(2rem, 1.5rem + 2.5vw, 4rem);
+  --space-2xl: clamp(3rem, 2rem + 5vw, 6rem);
+  --space-3xl: clamp(4rem, 3rem + 5vw, 8rem);
+  --space-section: clamp(6rem, 4rem + 10vw, 12rem);
+
+  /* ---- Grid ---- */
+  --grid-columns: 12;
+  --grid-gutter: clamp(1rem, 0.5rem + 2vw, 2rem);
+  --grid-max-width: 1400px;
+  --grid-margin: clamp(1rem, 0.5rem + 3vw, 4rem);
+
+  /* ---- Tile ---- */
+  --tile-size: clamp(8px, 6px + 0.5vw, 14px);
+  --tile-gap: 2px;
+  --tile-radius: 3px;
+
+  /* ---- Transitions ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 600ms;
+
+  /* ---- Z-index layers ---- */
+  --z-sky: 0;
+  --z-hills: 10;
+  --z-buildings-far: 20;
+  --z-buildings-mid: 30;
+  --z-tower: 40;
+  --z-buildings-near: 50;
+  --z-foreground: 60;
+  --z-content: 100;
+  --z-cable: 150;
+  --z-nav: 200;
+  --z-cursor: 300;
+  --z-modal: 400;
+}

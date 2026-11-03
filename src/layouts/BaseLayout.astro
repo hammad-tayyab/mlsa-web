@@ -1,0 +1,80 @@
+---
+import SEO from '../components/SEO.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+  type?: string;
+  jsonLd?: object | object[];
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage,
+  type,
+  jsonLd,
+} = Astro.props;
+
+// Default Organization JSON-LD (always present on all pages)
+const orgJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Microsoft Club GIKI",
+  "alternateName": [
+    "Microsoft Club-GIKI",
+    "MLSA GIKI",
+    "Microsoft Learn Student Ambassadors GIKI"
+  ],
+  "url": "https://mlsaclubgiki.tech",
+  "logo": "https://mlsaclubgiki.tech/assets/logo.png",
+  "sameAs": [
+    "https://www.instagram.com/microsoftclubgiki/",
+    "https://www.linkedin.com/company/microsoft-club-giki/",
+    "https://www.youtube.com/@LOGIKALGIKI",
+    "https://linktr.ee/MS_clubgiki"
+  ]
+};
+
+const allJsonLd = jsonLd ? [orgJsonLd, ...(Array.isArray(jsonLd) ? jsonLd : [jsonLd])] : [orgJsonLd];
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070B1A" />
+
+  <!-- Preload fonts -->
+  <link rel="preload" href="/fonts/BricolageGrotesque-Variable.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/InstrumentSans-Variable.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/JetBrainsMono-Variable.woff2" as="font" type="font/woff2" crossorigin />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <SEO
+    title={title}
+    description={description}
+    canonical={canonical}
+    ogImage={ogImage}
+    type={type}
+    jsonLd={allJsonLd}
+  />
+</head>
+<body>
+  <slot />
+
+  <!-- Animation layer loads after content (deferred) -->
+  <script>
+    // Placeholder for scroll engine initialization (Milestone 3)
+    console.log('[MSCLUB] Content loaded. Animation layer will initialize in Milestone 3.');
+  </script>
+</body>
+</html>
+

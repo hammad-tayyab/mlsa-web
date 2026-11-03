@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "micathon-2026",
+    "title": "MICATHON 2026",
+    "date": "2026-04-17",
+    "summary": "Annual flagship hackathon organized by the Microsoft Club at GIKI.",
+    "poster": null,
+    "links": [],
+    "status": "featured",
+    "tags": ["hackathon", "flagship"]
+  },
+  {
+    "slug": "datacamp-x-microsoft-club-giki",
+    "title": "DataCamp x Microsoft Club GIKI",
+    "date": "2026-04-03",
+    "summary": "Partnership with DataCamp Donates for the 2026 season — $399+ of premium data science education for students. A special way to earn a license to be revealed.",
+    "poster": null,
+    "links": [],
+    "status": "past",
+    "tags": ["partnership", "data-science"]
+  },
+  {
+    "slug": "gsoc-guidance-session",
+    "title": "GSoC Guidance Session",
+    "date": "2026-03-06",
+    "summary": "Guidance session on Google Summer of Code.",
+    "poster": null,
+    "links": [],
+    "status": "past",
+    "tags": ["open-source", "guidance"]
+  },
+  {
+    "slug": "code-till-sehri",
+    "title": "Code Till Sehri",
+    "date": null,
+    "summary": "Late-night coding marathon running until sehri.",
+    "poster": null,
+    "links": [],
+    "status": "upcoming",
+    "tags": ["coding", "marathon"]
+  },
+  {
+    "slug": "power-bi-workshop",
+    "title": "Power BI Workshop",
+    "date": null,
+    "summary": "Hands-on workshop on Microsoft Power BI for data visualization.",
+    "poster": null,
+    "links": [],
+    "status": "upcoming",
+    "tags": ["workshop", "data"]
+  },
+  {
+    "slug": "git-github-workshop",
+    "title": "Git & GitHub Workshop",
+    "date": null,
+    "summary": "Workshop covering Git version control and GitHub workflows.",
+    "poster": null,
+    "links": [],
+    "status": "upcoming",
+    "tags": ["workshop", "git"]
+  }
+]

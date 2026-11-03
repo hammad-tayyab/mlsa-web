@@ -1,0 +1,103 @@
+---
+import DetailLayout from '../../layouts/DetailLayout.astro';
+import eventsData from '../../content/events.json';
+
+export function getStaticPaths() {
+  return eventsData.map(event => ({
+    params: { slug: event.slug },
+    props: { event },
+  }));
+}
+
+const { event } = Astro.props;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": event.title,
+  "startDate": event.date,
+  "description": event.summary,
+  "organizer": {
+    "@type": "Organization",
+    "name": "Microsoft Club GIKI",
+    "url": "https://mlsaclubgiki.tech"
+  },
+  "location": {
+    "@type": "Place",
+    "name": "Ghulam Ishaq Khan Institute",
+    "address": "Topi, Swabi, Khyber Pakhtunkhwa, Pakistan"
+  },
+  "url": `https://mlsaclubgiki.tech/events/${event.slug}`
+};
+
+const pageTitle = `${event.title} | Microsoft Club GIKI`;
+const pageDescription = event.summary.slice(0, 160);
+---
+
+<DetailLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonical={`https://mlsaclubgiki.tech/events/${event.slug}`}
+  jsonLd={jsonLd}
+  backLabel="Events"
+  backHref="/#events"
+>
+  <article>
+    <span class="label">{event.status === 'featured' ? 'Featured Event' : event.status}</span>
+    <h1>{event.title}</h1>
+    {event.date && <time class="mono" datetime={event.date}>{event.date}</time>}
+    <p>{event.summary}</p>
+
+    {event.poster ? (
+      <img src={event.poster} alt={`Poster for ${event.title}`} width="600" height="800" loading="lazy" />
+    ) : (
+      <div class="asset-placeholder">POSTER NEEDED: {event.title}</div>
+    )}
+
+    {event.links.length > 0 && (
+      <div class="event-links">
+        {event.links.map((link: any) => (
+          <a href={link.url} class="btn btn-ghost" target="_blank" rel="noopener noreferrer">{link.label}</a>
+        ))}
+      </div>
+    )}
+
+    {event.tags && event.tags.length > 0 && (
+      <div class="event-tags">
+        {event.tags.map((tag: string) => (
+          <span class="mono" style="font-size: var(--text-xs); color: var(--text-muted); padding: 2px 8px; background: rgba(255,255,255,0.05); border-radius: 2px;">{tag}</span>
+        ))}
+      </div>
+    )}
+  </article>
+</DetailLayout>
+
+<style>
+  article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  h1 {
+    font-size: var(--text-3xl);
+  }
+
+  time {
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .event-links {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .event-tags {
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+  }
+</style>
+

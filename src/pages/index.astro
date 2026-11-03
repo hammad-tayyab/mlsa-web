@@ -1,16 +1,89 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Projects from '../components/Projects.astro';
+import Events from '../components/Events.astro';
+import Podcast from '../components/Podcast.astro';
+import Team from '../components/Team.astro';
+import Blog from '../components/Blog.astro';
+import Join from '../components/Join.astro';
+import Footer from '../components/Footer.astro';
+
+// Gather JSON-LD for events, episodes
+import eventsData from '../content/events.json';
+import episodesData from '../content/episodes.json';
+import postsData from '../content/posts.json';
+
+const eventJsonLd = eventsData
+  .filter(e => e.date)
+  .map(e => ({
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": e.title,
+    "startDate": e.date,
+    "description": e.summary,
+    "organizer": {
+      "@type": "Organization",
+      "name": "Microsoft Club GIKI",
+      "url": "https://mlsaclubgiki.tech"
+    },
+    "location": {
+      "@type": "Place",
+      "name": "Ghulam Ishaq Khan Institute",
+      "address": "Topi, Swabi, Khyber Pakhtunkhwa, Pakistan"
+    },
+    "url": `https://mlsaclubgiki.tech/events/${e.slug}`
+  }));
+
+const episodeJsonLd = episodesData
+  .filter(e => e.date)
+  .map(e => ({
+    "@context": "https://schema.org",
+    "@type": "PodcastEpisode",
+    "name": e.title,
+    "datePublished": e.date,
+    "description": e.summary,
+    "episodeNumber": e.ep,
+    "partOfSeries": {
+      "@type": "PodcastSeries",
+      "name": "Logikal",
+      "url": "https://www.youtube.com/@LOGIKALGIKI"
+    },
+    "url": `https://mlsaclubgiki.tech/podcast/${e.slug}`
+  }));
+
+const postJsonLd = postsData
+  .filter(p => p.date)
+  .map(p => ({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": p.title,
+    "author": {
+      "@type": "Person",
+      "name": p.author
+    },
+    "datePublished": p.date,
+    "url": `https://mlsaclubgiki.tech/blog/${p.slug}`
+  }));
+
+const allJsonLd = [...eventJsonLd, ...episodeJsonLd, ...postJsonLd];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout jsonLd={allJsonLd}>
+  <Nav />
+
+  <main>
+    <Hero />
+    <About />
+    <Projects />
+    <Events />
+    <Podcast />
+    <Team />
+    <Blog />
+    <Join />
+  </main>
+
+  <Footer />
+</BaseLayout>

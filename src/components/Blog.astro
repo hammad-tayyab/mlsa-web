@@ -1,0 +1,91 @@
+---
+import posts from '../content/posts.json';
+---
+
+<section class="scene blog" id="blog" aria-label="Blog">
+  <div class="blog__inner grid">
+    <div class="blog__header col-content">
+      <span class="label">4:30 AM</span>
+      <h2>Blog.</h2>
+    </div>
+    <div class="blog__list col-content">
+      {posts.map(post => (
+        <article class="blog__post">
+          <h3><a href={`/blog/${post.slug}`}>{post.title}</a></h3>
+          <span class="blog__author">by {post.author}</span>
+          <div class="blog__tags">
+            {post.tags.map(tag => (
+              <span class="blog__tag mono">{tag}</span>
+            ))}
+          </div>
+          {post.summary ? (
+            <p>{post.summary}</p>
+          ) : (
+            <p class="blog__placeholder">Full post coming soon.</p>
+          )}
+        </article>
+      ))}
+      {posts.length === 0 && (
+        <p class="blog__empty">No posts yet. Check back soon.</p>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .blog__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .blog__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+  }
+
+  .blog__post {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-lg);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 4px;
+  }
+
+  .blog__post h3 a {
+    color: var(--text-primary);
+    font-size: var(--text-xl);
+  }
+
+  .blog__author {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  .blog__tags {
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+  }
+
+  .blog__tag {
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  .blog__placeholder {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .blog__empty {
+    color: var(--text-muted);
+  }
+</style>

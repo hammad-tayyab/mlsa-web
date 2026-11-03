@@ -1,5 +1,6 @@
 ---
 import SEO from '../components/SEO.astro';
+import Cursor from '../components/Cursor.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -68,6 +69,7 @@ const allJsonLd = jsonLd ? [orgJsonLd, ...(Array.isArray(jsonLd) ? jsonLd : [jso
   />
 </head>
 <body>
+  <Cursor />
   <slot />
 
   <!-- Animation layer loads after content (deferred) -->

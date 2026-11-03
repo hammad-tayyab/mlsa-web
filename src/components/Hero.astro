@@ -1,11 +1,40 @@
 ---
+import SkylineSVG from './SkylineSVG.astro';
+import ClockTower from './ClockTower.astro';
+import TileGrid from './TileGrid.astro';
+import Cable from './Cable.astro';
 ---
 
 <section class="scene hero" id="home" aria-label="Hero">
+  <!-- Layer 0: Background Canvas Tile Grid (MS colors + Torch) -->
+  <TileGrid class="hero__tiles" />
+
+  <!-- Layer 1: Layered Vector Skyline Parallax (Hills, Panorama, Academic Block, Conifers) -->
+  <SkylineSVG class="hero__skyline" />
+
+  <!-- Layer 2: Centerpiece GIKI Clock Tower -->
+  <div class="hero__tower-stage">
+    <ClockTower class="hero__tower" />
+  </div>
+
+  <!-- Layer 3: 4-Strand Interactive SVG Cable -->
+  <Cable class="hero__cable" />
+
+  <!-- Layer 4: Semantic Content Layer (Real accessible HTML text) -->
   <div class="hero__content grid">
     <div class="hero__text col-content">
-      <h1 class="hero__title">Microsoft Club GIKI</h1>
-      <p class="hero__sub">Learn. Build. Lead.</p>
+      <div class="hero__pill mono">
+        <span class="hero__pill-dot" aria-hidden="true"></span>
+        <span>The Clock Tower Never Sleeps</span>
+      </div>
+
+      <h1 class="hero__title">
+        <span class="hero__title-line">Microsoft Club</span>
+        <span class="hero__title-line">GIKI</span>
+      </h1>
+
+      <p class="hero__sub mono">Learn. Build. Lead.</p>
+
       <div class="hero__ctas">
         <a href="#join" class="btn btn-primary">Join us</a>
         <a href="#podcast" class="btn btn-ghost">Hear Logikal</a>
@@ -13,25 +42,57 @@
     </div>
   </div>
 
-  <!-- Placeholder for skyline, tower, tile grid (Milestone 2) -->
-  <div class="hero__skyline-placeholder asset-placeholder" aria-hidden="true">
-    SKYLINE + TOWER + TILE GRID — Milestone 2
-  </div>
+  <!-- Subtle gradient floor to ground the tower & skyline -->
+  <div class="hero__ground-fog" aria-hidden="true"></div>
 </section>
 
 <style>
   .hero {
     position: relative;
     min-height: 100vh;
+    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 30%, var(--night-1) 0%, var(--night-0) 80%);
+    padding-block: 0;
+  }
+
+  .hero__tiles {
+    z-index: 2;
+  }
+
+  .hero__skyline {
+    z-index: 3;
+  }
+
+  .hero__tower-stage {
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: var(--z-tower);
+    pointer-events: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .hero__tower {
+    max-height: 65vh;
+  }
+
+  .hero__cable {
+    z-index: var(--z-cable);
   }
 
   .hero__content {
     position: relative;
     z-index: var(--z-content);
+    pointer-events: none;
     text-align: center;
+    margin-top: -8vh;
   }
 
   .hero__text {
@@ -41,26 +102,123 @@
     gap: var(--space-md);
   }
 
+  .hero__pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(11, 18, 48, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    letter-spacing: 0.08em;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .hero__pill-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--ms-green);
+    box-shadow: 0 0 8px var(--ms-green);
+    animation: blink 2.5s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
   .hero__title {
+    display: flex;
+    flex-direction: column;
+    line-height: 0.95;
     color: var(--text-primary);
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.85);
+  }
+
+  .hero__title-line {
+    display: block;
   }
 
   .hero__sub {
-    font-family: var(--font-mono);
     font-size: var(--text-lg);
     color: var(--text-secondary);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
   }
 
   .hero__ctas {
     display: flex;
     gap: var(--space-md);
-    margin-top: var(--space-md);
+    margin-top: var(--space-sm);
+    pointer-events: auto;
   }
 
-  .hero__skyline-placeholder {
+  .hero__ground-fog {
     position: absolute;
-    inset: 0;
-    z-index: var(--z-sky);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 180px;
+    background: linear-gradient(to top, var(--night-0) 0%, transparent 100%);
+    z-index: 55;
+    pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    .hero__content {
+      margin-top: -18vh;
+    }
+
+    .hero__tower {
+      max-height: 48vh;
+    }
+
+    .hero__ctas {
+      flex-direction: column;
+      width: 100%;
+      max-width: 260px;
+    }
   }
 </style>
+
+<script>
+  import { TowerChime } from '../scripts/audio';
+
+  const chime = new TowerChime();
+  const tower = document.getElementById('hero-clock-tower');
+
+  if (tower) {
+    let isSpinning = false;
+    tower.addEventListener('click', () => {
+      // 1. Play Web Audio chime
+      chime.play();
+
+      // 2. Spin clock hands (Easter egg)
+      if (!isSpinning) {
+        isSpinning = true;
+        const hourHand = document.getElementById('clock-hour-hand');
+        const minHand = document.getElementById('clock-minute-hand');
+
+        if (hourHand && minHand) {
+          hourHand.style.transition = 'transform 2.2s cubic-bezier(0.2, 0.8, 0.2, 1)';
+          minHand.style.transition = 'transform 2.2s cubic-bezier(0.2, 0.8, 0.2, 1)';
+
+          hourHand.style.transform = 'rotate(930deg)'; // 210 + 720
+          minHand.style.transform = 'rotate(2160deg)'; // 6 full rotations
+
+          setTimeout(() => {
+            hourHand.style.transition = 'transform 0.8s ease';
+            minHand.style.transition = 'transform 0.8s ease';
+            hourHand.style.transform = 'rotate(210deg)';
+            minHand.style.transform = 'rotate(0deg)';
+            isSpinning = false;
+          }, 2400);
+        }
+      }
+    });
+  }
+</script>

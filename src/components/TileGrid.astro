@@ -1,0 +1,38 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class={`tile-grid-wrapper ${className}`} aria-hidden="true">
+  <canvas id="hero-tile-grid-canvas" class="tile-grid-canvas"></canvas>
+</div>
+
+<style>
+  .tile-grid-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    overflow: hidden;
+  }
+
+  .tile-grid-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+
+<script>
+  import { TileGridCanvas } from '../scripts/tile-grid';
+
+  const canvas = document.getElementById('hero-tile-grid-canvas') as HTMLCanvasElement;
+  if (canvas) {
+    new TileGridCanvas(canvas);
+  }
+</script>

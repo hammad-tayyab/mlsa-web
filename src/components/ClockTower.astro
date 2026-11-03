@@ -1,0 +1,217 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class={`clock-tower-wrapper ${className}`} id="hero-clock-tower" role="img" aria-label="GIKI Clock Tower">
+  <!-- Interactive Clock Tower Vector SVG -->
+  <svg
+    class="clock-tower-svg"
+    viewBox="0 0 380 720"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <defs>
+      <!-- Subtle lighting filters -->
+      <filter id="tower-glow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="6" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+      <linearGradient id="clock-glass" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+        <stop offset="100%" stop-color="#e2e8f0" stop-opacity="0.95" />
+      </linearGradient>
+      <linearGradient id="tower-front-grad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#F3F6FB" />
+        <stop offset="100%" stop-color="#E2E9F3" />
+      </linearGradient>
+      <linearGradient id="tower-side-grad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#CAD6E7" />
+        <stop offset="100%" stop-color="#B7C6DA" />
+      </linearGradient>
+      <linearGradient id="pedestal-grad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#8FA2BF" />
+        <stop offset="100%" stop-color="#677A98" />
+      </linearGradient>
+    </defs>
+
+    <!-- Base / Pedestal and steps -->
+    <g class="tower-base">
+      <!-- Ground plinth (trapezoid) -->
+      <polygon points="10,705 370,705 340,665 40,665" fill="#A5B6CF" opacity="0.9" />
+      <polygon points="10,705 370,705 350,715 30,715" fill="#8194B0" />
+      <!-- Middle step block -->
+      <polygon points="75,665 295,665 295,610 75,610" fill="url(#pedestal-grad)" />
+      <polygon points="295,665 315,650 315,600 295,610" fill="#667996" />
+      <polygon points="75,610 295,610 315,600 95,600" fill="#B3C4DC" />
+    </g>
+
+    <!-- Main Tower Body -->
+    <g class="tower-body">
+      <!-- Front Elevation (Left face) -->
+      <rect x="110" y="70" width="130" height="535" fill="url(#tower-front-grad)" rx="1" />
+      
+      <!-- Side Elevation (Right perspective face) -->
+      <polygon points="240,70 290,95 290,605 240,605" fill="url(#tower-side-grad)" />
+
+      <!-- Top Crown / Battlements -->
+      <rect x="100" y="65" width="145" height="8" fill="#D3DFEE" />
+      <polygon points="245,65 295,90 290,95 240,70" fill="#B8C8DD" />
+
+      <!-- Translucent crown blocks -->
+      <g opacity="0.65">
+        <rect x="105" y="18" width="28" height="45" fill="#E8F0FA" />
+        <rect x="145" y="18" width="28" height="45" fill="#E8F0FA" />
+        <rect x="185" y="18" width="28" height="45" fill="#E8F0FA" />
+        <rect x="225" y="18" width="28" height="45" fill="#D7E3F2" />
+        <polygon points="255,28 285,42 285,85 255,70" fill="#CAD7E8" />
+      </g>
+
+      <!-- Center Pillar Groove -->
+      <rect x="206" y="180" width="24" height="420" fill="#CCD8E8" />
+      <polygon points="230,180 236,183 236,603 230,605" fill="#B3C3D7" />
+    </g>
+
+    <!-- CLOCKS -->
+    <!-- Front Face Clock -->
+    <g class="tower-clock-front" id="tower-clock-front">
+      <!-- Dark clock housing -->
+      <rect x="120" y="80" width="76" height="76" fill="#0D162B" rx="3" />
+      <!-- Blue outer ring -->
+      <circle cx="158" cy="118" r="30" stroke="#00A4EF" stroke-width="3" fill="#0D162B" />
+      <!-- Dial face -->
+      <circle cx="158" cy="118" r="27" fill="url(#clock-glass)" />
+
+      <!-- Dial hour ticks -->
+      <g stroke="#0D162B" stroke-width="1.8" stroke-linecap="round">
+        <line x1="158" y1="94" x2="158" y2="99" />
+        <line x1="158" y1="137" x2="158" y2="142" />
+        <line x1="134" y1="118" x2="139" y2="118" />
+        <line x1="177" y1="118" x2="182" y2="118" />
+        <!-- 30 deg ticks -->
+        <line x1="170" y1="97" x2="167" y2="101" />
+        <line x1="179" y1="106" x2="175" y2="109" />
+        <line x1="179" y1="130" x2="175" y2="127" />
+        <line x1="170" y1="139" x2="167" y2="135" />
+        <line x1="146" y1="139" x2="149" y2="135" />
+        <line x1="137" y1="130" x2="141" y2="127" />
+        <line x1="137" y1="106" x2="141" y2="109" />
+        <line x1="146" y1="97" x2="149" y2="101" />
+      </g>
+
+      <!-- Center pin -->
+      <circle cx="158" cy="118" r="2.5" fill="#0D162B" />
+
+      <!-- Hands (Initial: 7:00 PM -> Hour hand at 7 o'clock = 210 deg, Minute hand at 12 o'clock = 0 deg) -->
+      <g id="clock-hour-hand" transform="rotate(210, 158, 118)">
+        <line x1="158" y1="118" x2="158" y2="103" stroke="#F25022" stroke-width="3" stroke-linecap="round" />
+      </g>
+      <g id="clock-minute-hand" transform="rotate(0, 158, 118)">
+        <line x1="158" y1="118" x2="158" y2="97" stroke="#0D162B" stroke-width="2.2" stroke-linecap="round" />
+      </g>
+    </g>
+
+    <!-- Side Perspective Clock -->
+    <g class="tower-clock-side">
+      <polygon points="245,95 285,115 285,165 245,145" fill="#0D162B" />
+      <!-- Perspective oval face -->
+      <ellipse cx="265" cy="130" rx="14" ry="22" fill="#FFFFFF" transform="rotate(-15, 265, 130)" opacity="0.95" />
+      <!-- Green side indicator -->
+      <line x1="265" y1="130" x2="265" y2="116" stroke="#7FBA00" stroke-width="2.5" stroke-linecap="round" />
+      <circle cx="265" cy="130" r="2" fill="#0D162B" />
+    </g>
+
+    <!-- FRONT WINDOW BANDS (Live / Lit Windows) -->
+    <g class="tower-front-windows">
+      <!-- Window column 1 (Main front column) -->
+      <rect x="125" y="195" width="70" height="20" rx="2" fill="#7FBA00" class="lit-window win-green" />
+      <rect x="125" y="220" width="70" height="20" rx="2" fill="#FFB900" class="lit-window win-yellow" />
+      <rect x="125" y="245" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
+      <rect x="125" y="270" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
+      <rect x="125" y="295" width="70" height="20" rx="2" fill="#F25022" class="lit-window win-red" />
+      <rect x="125" y="320" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
+      <rect x="125" y="345" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
+      <rect x="125" y="370" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
+      <rect x="125" y="395" width="70" height="20" rx="2" fill="#FFB900" class="lit-window win-yellow" />
+      <rect x="125" y="420" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
+      <rect x="125" y="445" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
+      <rect x="125" y="470" width="70" height="20" rx="2" fill="#7FBA00" class="lit-window win-green" />
+      <rect x="125" y="495" width="70" height="20" rx="2" fill="#7FBA00" class="lit-window win-green" />
+      <rect x="125" y="520" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
+      <rect x="125" y="545" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
+      <rect x="125" y="570" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
+    </g>
+
+    <!-- SIDE WINDOW COLUMN (Perspective Windows) -->
+    <g class="tower-side-windows">
+      <polygon points="252,190 280,205 280,220 252,205" fill="#0D162B" />
+      <polygon points="252,212 280,227 280,242 252,227" fill="#0D162B" />
+      <polygon points="252,234 280,249 280,264 252,249" fill="#0D162B" />
+      <polygon points="252,256 280,271 280,286 252,271" fill="#0D162B" />
+      <polygon points="252,278 280,293 280,308 252,293" fill="#0D162B" />
+      <polygon points="252,300 280,315 280,330 252,315" fill="#0D162B" />
+      <polygon points="252,322 280,337 280,352 252,337" fill="#0D162B" />
+      <polygon points="252,344 280,359 280,374 252,359" fill="#0D162B" />
+      <polygon points="252,366 280,381 280,396 252,381" fill="#0D162B" />
+      <polygon points="252,388 280,403 280,418 252,403" fill="#0D162B" />
+      <polygon points="252,410 280,425 280,440 252,425" fill="#0D162B" />
+      <polygon points="252,432 280,447 280,462 252,447" fill="#0D162B" />
+      <polygon points="252,454 280,469 280,484 252,469" fill="#0D162B" />
+      <polygon points="252,476 280,491 280,506 252,491" fill="#0D162B" />
+      <polygon points="252,498 280,513 280,528 252,513" fill="#0D162B" />
+      <polygon points="252,520 280,535 280,550 252,535" fill="#0D162B" />
+      <polygon points="252,542 280,557 280,572 252,557" fill="#0D162B" />
+      <polygon points="252,564 280,579 280,594 252,579" fill="#0D162B" />
+    </g>
+
+    <!-- Cable attachment hub at crown -->
+    <circle cx="158" cy="65" r="5" fill="#131F3A" stroke="#00A4EF" stroke-width="2" id="tower-cable-port" />
+  </svg>
+</div>
+
+<style>
+  .clock-tower-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.6));
+    cursor: pointer;
+    user-select: none;
+    transition: transform var(--duration-fast) var(--ease-spring);
+  }
+
+  .clock-tower-wrapper:hover {
+    transform: scale(1.015);
+  }
+
+  .clock-tower-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+
+  .lit-window {
+    filter: drop-shadow(0 0 8px currentColor);
+    transition: filter var(--duration-normal) var(--ease-out);
+  }
+
+  .win-green { color: var(--ms-green); }
+  .win-yellow { color: var(--ms-yellow); }
+  .win-red { color: var(--ms-red); }
+
+  #clock-hour-hand, #clock-minute-hand {
+    transform-origin: 158px 118px;
+    transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @media (max-width: 768px) {
+    .clock-tower-wrapper {
+      max-width: 220px;
+    }
+  }
+</style>

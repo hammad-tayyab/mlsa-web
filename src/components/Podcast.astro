@@ -2,6 +2,8 @@
 import episodes from '../content/episodes.json';
 import Rail from './Rail.astro';
 import WinCard from './WinCard.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="scene podcast" id="podcast" aria-label="Podcast">
@@ -30,7 +32,7 @@ import WinCard from './WinCard.astro';
               </div>
 
               <h3 class="episode-title">
-                <a href={`/podcast/${ep.slug}`}>{ep.title}</a>
+                <a href={`${base}/podcast/${ep.slug}`}>{ep.title}</a>
               </h3>
 
               {ep.guest && (
@@ -65,7 +67,7 @@ import WinCard from './WinCard.astro';
                 >
                   ▶ Play Inline
                 </button>
-                <a href={`/podcast/${ep.slug}`} class="btn btn-ghost btn-sm">
+                <a href={`${base}/podcast/${ep.slug}`} class="btn btn-ghost btn-sm">
                   Details &rarr;
                 </a>
               </div>

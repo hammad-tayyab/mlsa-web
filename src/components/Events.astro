@@ -2,6 +2,8 @@
 import eventsData from '../content/events.json';
 import Rail from './Rail.astro';
 import WinCard from './WinCard.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="scene events" id="events" aria-label="Events">
@@ -39,7 +41,7 @@ import WinCard from './WinCard.astro';
               </div>
 
               <h3 class="event-title">
-                <a href={`/events/${event.slug}`}>{event.title}</a>
+                <a href={`${base}/events/${event.slug}`}>{event.title}</a>
               </h3>
 
               <p class="event-summary">{event.summary}</p>
@@ -53,7 +55,7 @@ import WinCard from './WinCard.astro';
               )}
 
               <div class="event-actions">
-                <a href={`/events/${event.slug}`} class={`btn btn-sm ${isFeatured ? 'btn-primary' : 'btn-ghost'}`}>
+                <a href={`${base}/events/${event.slug}`} class={`btn btn-sm ${isFeatured ? 'btn-primary' : 'btn-ghost'}`}>
                   {isFeatured ? 'Explore Micathon' : 'View Event'} &rarr;
                 </a>
               </div>

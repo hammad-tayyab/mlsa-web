@@ -28,15 +28,16 @@ const jsonLd = {
 
 const pageTitle = `EP${String(episode.ep).padStart(3, '0')} — ${episode.title} | Logikal | Microsoft Club GIKI`;
 const pageDescription = episode.summary ? episode.summary.slice(0, 160) : `Logikal Podcast Episode ${episode.ep}: ${episode.title}`;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <DetailLayout
   title={pageTitle}
   description={pageDescription}
-  canonical={`https://mlsaclubgiki.tech/podcast/${episode.slug}`}
+  canonical={new URL(Astro.url.pathname, Astro.site).href}
   jsonLd={jsonLd}
   backLabel="Podcast"
-  backHref="/#podcast"
+  backHref={`${base}/#podcast`}
 >
   <article>
     <span class="label">Episode {episode.ep}</span>

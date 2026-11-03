@@ -32,15 +32,16 @@ const jsonLd = {
 
 const pageTitle = `${event.title} | Microsoft Club GIKI`;
 const pageDescription = event.summary.slice(0, 160);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <DetailLayout
   title={pageTitle}
   description={pageDescription}
-  canonical={`https://mlsaclubgiki.tech/events/${event.slug}`}
+  canonical={new URL(Astro.url.pathname, Astro.site).href}
   jsonLd={jsonLd}
   backLabel="Events"
-  backHref="/#events"
+  backHref={`${base}/#events`}
 >
   <article>
     <span class="label">{event.status === 'featured' ? 'Featured Event' : event.status}</span>

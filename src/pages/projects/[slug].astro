@@ -13,14 +13,15 @@ const { project } = Astro.props;
 
 const pageTitle = `${project.title} | Microsoft Club GIKI`;
 const pageDescription = project.summary.slice(0, 160);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <DetailLayout
   title={pageTitle}
   description={pageDescription}
-  canonical={`https://mlsaclubgiki.tech/projects/${project.slug}`}
+  canonical={new URL(Astro.url.pathname, Astro.site).href}
   backLabel="Projects"
-  backHref="/#projects"
+  backHref={`${base}/#projects`}
 >
   <article>
     <h1>{project.title}</h1>

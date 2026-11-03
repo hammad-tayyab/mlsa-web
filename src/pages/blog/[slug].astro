@@ -25,15 +25,16 @@ const jsonLd = post.date ? {
 
 const pageTitle = `${post.title} | Blog | Microsoft Club GIKI`;
 const pageDescription = post.summary ? post.summary.slice(0, 160) : `A blog post by ${post.author}`;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <DetailLayout
   title={pageTitle}
   description={pageDescription}
-  canonical={`https://mlsaclubgiki.tech/blog/${post.slug}`}
+  canonical={new URL(Astro.url.pathname, Astro.site).href}
   jsonLd={jsonLd}
   backLabel="Blog"
-  backHref="/#blog"
+  backHref={`${base}/#blog`}
 >
   <article>
     <h1>{post.title}</h1>

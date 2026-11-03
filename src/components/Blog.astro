@@ -1,5 +1,7 @@
 ---
 import posts from '../content/posts.json';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="scene blog" id="blog" aria-label="Blog">
@@ -10,7 +12,7 @@ import posts from '../content/posts.json';
     <div class="blog__list col-content">
       {posts.map(post => (
         <article class="blog__post">
-          <h3><a href={`/blog/${post.slug}`}>{post.title}</a></h3>
+          <h3><a href={`${base}/blog/${post.slug}`}>{post.title}</a></h3>
           <span class="blog__author">by {post.author}</span>
           <div class="blog__tags">
             {post.tags.map(tag => (

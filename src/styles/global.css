@@ -9,7 +9,13 @@
 /* ---- Page shell ---- */
 html {
   background-color: var(--night-0);
-  zoom: 0.8;
+  zoom: 1;
+}
+
+@media (min-width: 1024px) {
+  html {
+    zoom: 0.8;
+  }
 }
 
 body {

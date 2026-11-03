@@ -1,0 +1,98 @@
+---
+/**
+ * Pixel-Style Stepped Vine Component
+ * - Located in the left gutter, drawn by scroll (stroke-dashoffset), behind content.
+ * - Pixel-style stepped / orthogonal line down through every section.
+ * - Nodes at each section with pixel leaves & flowers in Microsoft 4-square colors.
+ * - Starts at Hero, ends at Join section.
+ * - Thinner and flush to far left edge on mobile.
+ */
+---
+
+<div class="vine-container" id="vine-container" aria-hidden="true">
+  <svg
+    class="vine-svg"
+    id="vine-svg"
+    xmlns="http://www.w3.org/2000/svg"
+    preserveAspectRatio="none"
+  >
+    <defs>
+      <!-- Filter for crisp pixelated rendering -->
+      <filter id="vine-glow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#7FBA00" flood-opacity="0.4" />
+      </filter>
+    </defs>
+
+    <!-- Vine background guideline (subtle dark trace) -->
+    <path id="vine-path-bg" class="vine-path vine-path--bg" fill="none" />
+
+    <!-- Animated drawing vine path -->
+    <path id="vine-path" class="vine-path vine-path--live" fill="none" />
+
+    <!-- Section nodes group (injected dynamically or anchored) -->
+    <g id="vine-nodes-group"></g>
+  </svg>
+</div>
+
+<style>
+  .vine-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90px;
+    height: 100%;
+    z-index: 6; /* behind content (z-index 100), above background */
+    pointer-events: none;
+    overflow: visible;
+  }
+
+  .vine-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    image-rendering: pixelated;
+  }
+
+  .vine-path {
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 2;
+  }
+
+  .vine-path--bg {
+    stroke: rgba(127, 186, 0, 0.12);
+    stroke-width: 4px;
+  }
+
+  .vine-path--live {
+    stroke: #7FBA00;
+    stroke-width: 3px;
+    filter: url(#vine-glow);
+    transition: stroke-dashoffset 0.08s linear;
+  }
+
+  @media (max-width: 768px) {
+    .vine-container {
+      width: 28px;
+      left: 2px;
+    }
+
+    .vine-path--bg {
+      stroke-width: 2.5px;
+    }
+
+    .vine-path--live {
+      stroke-width: 2px;
+    }
+  }
+</style>
+
+<script>
+  import { initVine } from '../scripts/vine';
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVine);
+  } else {
+    initVine();
+  }
+</script>

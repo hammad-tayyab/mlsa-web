@@ -6,6 +6,7 @@ interface Props {
   ogImage?: string;
   type?: string;
   jsonLd?: object | object[];
+  noindex?: boolean;
 }
 
 const {
@@ -15,6 +16,7 @@ const {
   ogImage = '/assets/og-default.png',
   type = 'website',
   jsonLd,
+  noindex = false,
 } = Astro.props;
 ---
 
@@ -22,6 +24,7 @@ const {
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
 
 <!-- Open Graph -->
 <meta property="og:type" content={type} />

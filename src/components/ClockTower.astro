@@ -127,19 +127,19 @@ const { class: className = '' } = Astro.props;
     <!-- FRONT WINDOW BANDS (Live / Lit Windows) -->
     <g class="tower-front-windows">
       <!-- Window column 1 (Main front column) -->
-      <rect x="125" y="195" width="70" height="20" rx="2" fill="#7FBA00" class="lit-window win-green" />
-      <rect x="125" y="220" width="70" height="20" rx="2" fill="#FFB900" class="lit-window win-yellow" />
+      <rect x="129" y="197" width="62" height="16" rx="1.5" fill="#FFB900" class="lit-window" />
+      <rect x="129" y="222" width="62" height="16" rx="1.5" fill="#FFB900" class="lit-window" />
       <rect x="125" y="245" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
       <rect x="125" y="270" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
-      <rect x="125" y="295" width="70" height="20" rx="2" fill="#F25022" class="lit-window win-red" />
+      <rect x="129" y="297" width="62" height="16" rx="1.5" fill="#FFB900" class="lit-window" />
       <rect x="125" y="320" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
       <rect x="125" y="345" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
       <rect x="125" y="370" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
-      <rect x="125" y="395" width="70" height="20" rx="2" fill="#FFB900" class="lit-window win-yellow" />
+      <rect x="129" y="397" width="62" height="16" rx="1.5" fill="#FFB900" class="lit-window" />
       <rect x="125" y="420" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
       <rect x="125" y="445" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
-      <rect x="125" y="470" width="70" height="20" rx="2" fill="#7FBA00" class="lit-window win-green" />
-      <rect x="125" y="495" width="70" height="20" rx="2" fill="#7FBA00" class="lit-window win-green" />
+      <rect x="129" y="472" width="62" height="16" rx="1.5" fill="#FFB900" class="lit-window" />
+      <rect x="129" y="497" width="62" height="16" rx="1.5" fill="#FFB900" class="lit-window" />
       <rect x="125" y="520" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
       <rect x="125" y="545" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
       <rect x="125" y="570" width="70" height="20" rx="2" fill="#131F3A" class="dark-window" />
@@ -196,13 +196,10 @@ const { class: className = '' } = Astro.props;
   }
 
   .lit-window {
-    filter: drop-shadow(0 0 8px currentColor);
+    fill: #FFB900;
+    filter: drop-shadow(0 0 6px rgba(255, 185, 0, 0.65));
     transition: filter var(--duration-normal) var(--ease-out);
   }
-
-  .win-green { color: var(--ms-green); }
-  .win-yellow { color: var(--ms-yellow); }
-  .win-red { color: var(--ms-red); }
 
   #clock-hour-hand, #clock-minute-hand {
     transform-origin: 158px 118px;

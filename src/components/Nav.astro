@@ -23,6 +23,12 @@ const navLinks = [
       {navLinks.map(link => (
         <a href={link.href} class="nav__link" role="listitem">{link.label}</a>
       ))}
+      <a href="/admin" class="nav__admin-btn" aria-label="Admin login" title="Admin login">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+      </a>
     </div>
 
     <button class="nav__menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -40,6 +46,9 @@ const navLinks = [
       {navLinks.map(link => (
         <a href={link.href} class="nav__mobile-link">{link.label}</a>
       ))}
+      <a href="/admin" class="nav__mobile-link" style="color: var(--ms-blue); font-size: var(--text-lg); margin-top: 1rem;">
+        🔒 Admin Login
+      </a>
     </div>
   </div>
 </nav>
@@ -109,6 +118,26 @@ const navLinks = [
     right: 0;
     height: 2px;
     background: var(--ms-blue);
+  }
+
+  .nav__admin-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin-left: var(--space-xs);
+    transition: color var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out),
+                background-color var(--duration-fast) var(--ease-out);
+  }
+
+  .nav__admin-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--ms-blue);
+    background: rgba(0, 164, 239, 0.1);
   }
 
   .nav__menu-btn {

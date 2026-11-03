@@ -1,14 +1,257 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import WinCard from '../components/WinCard.astro';
 ---
 
-<BaseLayout title="Admin | Microsoft Club GIKI" description="Admin panel — coming soon.">
-  <main style="display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem;">
-    <div style="text-align: center;">
-      <h1 style="font-family: var(--font-display); font-size: var(--text-3xl); color: var(--text-primary);">Admin</h1>
-      <p style="color: var(--text-muted); margin-top: 1rem;">This panel is out of scope for the current build.</p>
-      <a href="/" style="display: inline-block; margin-top: 2rem; font-family: var(--font-mono); font-size: var(--text-sm); color: var(--ms-blue);">← Back to site</a>
+<BaseLayout
+  title="Admin Login | Microsoft Club GIKI"
+  description="Restricted executive administration portal."
+  noindex={true}
+>
+  <main class="admin-page">
+    <div class="admin-wrapper">
+      <WinCard title="admin.exe" class="admin-window">
+        <form class="admin-form" id="admin-login-form">
+          <div class="admin-header">
+            <div class="admin-badge">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+            </div>
+            <div>
+              <h1 class="admin-title">System Authentication</h1>
+              <p class="admin-subtitle">Enter credentials to access portal</p>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="admin-username" class="form-label">Username</label>
+            <input
+              type="text"
+              id="admin-username"
+              name="username"
+              required
+              autocomplete="username"
+              class="form-input"
+              placeholder="e.g. lead@mlsaclubgiki.tech"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="admin-password" class="form-label">Password</label>
+            <input
+              type="password"
+              id="admin-password"
+              name="password"
+              required
+              autocomplete="current-password"
+              class="form-input"
+              placeholder="••••••••••••"
+            />
+          </div>
+
+          <div class="status-msg" id="auth-status-msg" role="alert" aria-live="polite"></div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="login-submit-btn">
+              Login
+            </button>
+            <a href="/" class="btn btn-ghost">
+              Cancel
+            </a>
+          </div>
+
+          <div class="auth-notice mono">
+            <span>[STUB] Auth adapter pluggable in src/scripts/auth.ts</span>
+          </div>
+        </form>
+      </WinCard>
     </div>
   </main>
 </BaseLayout>
 
+<style>
+  .admin-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    background: radial-gradient(circle at 50% 40%, var(--night-1) 0%, var(--night-0) 90%);
+  }
+
+  .admin-wrapper {
+    width: 100%;
+    max-width: 440px;
+  }
+
+  .admin-window {
+    width: 100%;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 164, 239, 0.15);
+  }
+
+  .admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-xs);
+  }
+
+  .admin-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .admin-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+    background: rgba(0, 164, 239, 0.15);
+    border: 1px solid var(--ms-blue);
+    color: var(--ms-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .admin-title {
+    font-size: var(--text-lg);
+    line-height: 1.2;
+    color: var(--text-primary);
+  }
+
+  .admin-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-label {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 10px 14px;
+    background: #060B18;
+    border: 2px solid #1A2846;
+    border-radius: 2px;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 16px;
+    outline: none;
+    transition: border-color var(--duration-fast) var(--ease-out),
+                box-shadow var(--duration-fast) var(--ease-out);
+  }
+
+  .form-input:focus {
+    border-color: var(--ms-blue);
+    box-shadow: 0 0 0 2px rgba(0, 164, 239, 0.25);
+  }
+
+  .status-msg {
+    min-height: 20px;
+    font-size: 14px;
+    font-family: var(--font-body);
+    display: none;
+  }
+
+  .status-msg.status-error {
+    display: block;
+    color: var(--ms-red);
+  }
+
+  .status-msg.status-info {
+    display: block;
+    color: var(--ms-yellow);
+  }
+
+  .form-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-xs);
+  }
+
+  .auth-notice {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    padding-top: var(--space-xs);
+  }
+</style>
+
+<script>
+  import { authenticateAdmin } from '../scripts/auth';
+
+  const form = document.getElementById('admin-login-form') as HTMLFormElement;
+  const statusMsg = document.getElementById('auth-status-msg');
+  const submitBtn = document.getElementById('login-submit-btn') as HTMLButtonElement;
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const usernameInput = document.getElementById('admin-username') as HTMLInputElement;
+      const passwordInput = document.getElementById('admin-password') as HTMLInputElement;
+
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!username || !password) return;
+
+      // Set loading state
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Verifying...';
+      }
+      if (statusMsg) {
+        statusMsg.className = 'status-msg status-info';
+        statusMsg.textContent = 'Contacting authentication endpoint...';
+      }
+
+      try {
+        const result = await authenticateAdmin({ username, password });
+        if (result.success) {
+          if (statusMsg) {
+            statusMsg.className = 'status-msg status-info';
+            statusMsg.textContent = 'Access granted. Redirecting...';
+          }
+          setTimeout(() => {
+            window.location.href = result.redirectUrl || '/';
+          }, 800);
+        } else {
+          if (statusMsg) {
+            statusMsg.className = 'status-msg status-error';
+            statusMsg.textContent = result.message || 'Invalid credentials. Access denied.';
+          }
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Login';
+          }
+        }
+      } catch (err) {
+        if (statusMsg) {
+          statusMsg.className = 'status-msg status-error';
+          statusMsg.textContent = 'Authentication service currently unavailable.';
+        }
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Login';
+        }
+      }
+    });
+  }
+</script>

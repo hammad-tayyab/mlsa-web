@@ -10,6 +10,7 @@ interface Props {
   ogImage?: string;
   type?: string;
   jsonLd?: object | object[];
+  noindex?: boolean;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
   ogImage,
   type,
   jsonLd,
+  noindex = false,
 } = Astro.props;
 
 // Default Organization JSON-LD (always present on all pages)
@@ -66,6 +68,7 @@ const allJsonLd = jsonLd ? [orgJsonLd, ...(Array.isArray(jsonLd) ? jsonLd : [jso
     ogImage={ogImage}
     type={type}
     jsonLd={allJsonLd}
+    noindex={noindex}
   />
 </head>
 <body>

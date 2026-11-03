@@ -10,6 +10,7 @@ import Blog from '../components/Blog.astro';
 import Join from '../components/Join.astro';
 import Footer from '../components/Footer.astro';
 import ClockTower from '../components/ClockTower.astro';
+import Vine from '../components/Vine.astro';
 
 // Gather JSON-LD for events, episodes
 import eventsData from '../content/events.json';
@@ -72,7 +73,13 @@ const allJsonLd = [...eventJsonLd, ...episodeJsonLd, ...postJsonLd];
 ---
 
 <BaseLayout jsonLd={allJsonLd}>
+  <!-- Fixed Full-Viewport Tessellation Background Canvas -->
+  <canvas id="global-tessellation-canvas" class="global-tessellation" aria-hidden="true"></canvas>
+
   <Nav />
+
+  <!-- Continuous Pixel-Style Stepped Vine in Left Gutter -->
+  <Vine />
 
   <!-- Fixed Clock Tower Background Layer on the Right Side of the Viewport -->
   <aside class="fixed-tower-stage" aria-label="GIKI Clock Tower">
@@ -93,6 +100,16 @@ const allJsonLd = [...eventJsonLd, ...episodeJsonLd, ...postJsonLd];
 </BaseLayout>
 
 <style>
+  .global-tessellation {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1; /* behind all content */
+    pointer-events: none;
+    opacity: 0.35;
+  }
+
   .fixed-tower-stage {
     position: fixed;
     right: clamp(16px, 4vw, 70px);
@@ -130,4 +147,10 @@ const allJsonLd = [...eventJsonLd, ...episodeJsonLd, ...postJsonLd];
 
 <script>
   import '../scripts/scroll-engine';
+  import { TessellationCanvas } from '../scripts/constellation';
+
+  const tessCanvas = document.getElementById('global-tessellation-canvas') as HTMLCanvasElement;
+  if (tessCanvas) {
+    new TessellationCanvas(tessCanvas);
+  }
 </script>

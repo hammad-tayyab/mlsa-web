@@ -15,6 +15,11 @@ html {
   html {
     font-size: 80%;
   }
+
+  .clock-tower-svg {
+    height: min(88vh, 660px) !important;
+    width: auto !important;
+  }
 }
 
 body {

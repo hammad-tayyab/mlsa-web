@@ -117,13 +117,6 @@ const allJsonLd = [...eventJsonLd, ...episodeJsonLd, ...postJsonLd];
     transition: opacity var(--duration-normal) var(--ease-out);
   }
 
-  .fixed-tower {
-    width: min(22vw, 240px);
-    height: auto;
-    max-width: 240px;
-    flex: 0 0 auto;
-  }
-
   @media (max-width: 900px) {
     .fixed-tower-stage {
       right: 2%;
@@ -133,7 +126,7 @@ const allJsonLd = [...eventJsonLd, ...episodeJsonLd, ...postJsonLd];
       z-index: 10;
     }
 
-    .fixed-tower {
+    .fixed-tower.clock-tower-wrapper {
       width: min(30vw, 170px);
       max-width: 170px;
     }
@@ -149,7 +142,7 @@ const allJsonLd = [...eventJsonLd, ...episodeJsonLd, ...postJsonLd];
       pointer-events: none;
     }
 
-    .fixed-tower {
+    .fixed-tower.clock-tower-wrapper {
       width: min(26vw, 110px);
       max-width: 110px;
     }

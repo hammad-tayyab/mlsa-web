@@ -118,8 +118,10 @@ const allJsonLd = [...eventJsonLd, ...episodeJsonLd, ...postJsonLd];
   }
 
   .fixed-tower {
-    max-height: 84vh;
-    width: auto;
+    width: min(22vw, 240px);
+    height: auto;
+    max-width: 240px;
+    flex: 0 0 auto;
   }
 
   @media (max-width: 900px) {
@@ -132,13 +134,24 @@ const allJsonLd = [...eventJsonLd, ...episodeJsonLd, ...postJsonLd];
     }
 
     .fixed-tower {
-      max-height: 50vh;
+      width: min(30vw, 170px);
+      max-width: 170px;
     }
   }
 
   @media (max-width: 768px) {
     .fixed-tower-stage {
-      display: none;
+      display: flex;
+      right: 0;
+      width: 30vw;
+      max-width: 130px;
+      opacity: 0.2;
+      pointer-events: none;
+    }
+
+    .fixed-tower {
+      width: min(26vw, 110px);
+      max-width: 110px;
     }
   }
 </style>

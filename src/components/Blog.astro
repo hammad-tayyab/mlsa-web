@@ -1,70 +1,140 @@
 ---
 import posts from '../content/posts.json';
+import Rail from './Rail.astro';
+import WinCard from './WinCard.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="scene blog" id="blog" aria-label="Blog">
-  <div class="blog__inner grid">
-    <div class="blog__header col-content">
+  <div class="blog__header grid">
+    <div class="col-content">
       <h2>Blog.</h2>
+      <p class="blog__subtitle">Ideas, lessons, and stories from Microsoft Club GIKI.</p>
     </div>
-    <div class="blog__list col-content">
-      {posts.map(post => (
-        <article class="blog__post">
-          <h3><a href={`${base}/blog/${post.slug}`}>{post.title}</a></h3>
-          <span class="blog__author">by {post.author}</span>
-          <div class="blog__tags">
-            {post.tags.map(tag => (
-              <span class="blog__tag mono">{tag}</span>
-            ))}
-          </div>
-          {post.summary ? (
-            <p>{post.summary}</p>
-          ) : (
-            <p class="blog__placeholder">Full post coming soon.</p>
-          )}
-        </article>
-      ))}
-      {posts.length === 0 && (
-        <p class="blog__empty">No posts yet. Check back soon.</p>
-      )}
-    </div>
+  </div>
+
+  <div class="blog__rail-wrapper">
+    {posts.length > 0 ? (
+      <Rail label="Blog posts">
+        {posts.map(post => (
+          <WinCard title={`${post.slug}.exe`}>
+            <div class="blog__post">
+              <div class="blog__post-top">
+                <span class="label blog__badge">ARTICLE</span>
+                {post.date && <time class="mono blog__date" datetime={post.date}>{post.date}</time>}
+              </div>
+
+              <h3 class="blog__title">
+                <a href={`${base}/blog/${post.slug}`}>{post.title}</a>
+              </h3>
+
+              <p class="blog__author">By <span>{post.author}</span></p>
+
+              <p class:list={['blog__summary', { 'blog__placeholder': !post.summary }]}>
+                {post.summary || 'Full post coming soon.'}
+              </p>
+
+              <div class="blog__tags">
+                {post.tags.map(tag => (
+                  <span class="blog__tag mono">{tag}</span>
+                ))}
+              </div>
+
+              <div class="blog__actions">
+                <a href={`${base}/blog/${post.slug}`} class="btn btn-ghost btn-sm">
+                  Details &rarr;
+                </a>
+              </div>
+            </div>
+          </WinCard>
+        ))}
+      </Rail>
+    ) : (
+      <p class="blog__empty">No posts yet. Check back soon.</p>
+    )}
   </div>
 </section>
 
 <style>
-  .blog__header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
+  .blog {
+    overflow: hidden;
   }
 
-  .blog__list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
-    margin-top: var(--space-xl);
+  .blog__header {
+    padding-inline: clamp(16px, 5vw, 64px);
+    margin-bottom: var(--space-xl);
+  }
+
+  .blog__subtitle {
+    margin-top: var(--space-xs);
+    color: var(--text-muted);
+  }
+
+  .blog__rail-wrapper {
+    width: 100%;
   }
 
   .blog__post {
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
-    padding: var(--space-lg);
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 4px;
+    gap: var(--space-sm);
+    height: 100%;
+    justify-content: space-between;
   }
 
-  .blog__post h3 a {
+  .blog__post-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .blog__badge {
+    color: var(--ms-blue);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .blog__date {
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+
+  .blog__title {
+    font-size: var(--text-2xl);
+    line-height: 1.15;
+  }
+
+  .blog__title a {
     color: var(--text-primary);
-    font-size: var(--text-xl);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .blog__title a:hover {
+    color: var(--ms-blue);
   }
 
   .blog__author {
     font-size: var(--text-sm);
+    color: var(--text-muted);
+  }
+
+  .blog__author span {
+    color: var(--ms-green);
+  }
+
+  .blog__summary {
+    flex: 1;
+    font-size: var(--text-sm);
+    line-height: 1.6;
     color: var(--text-secondary);
+  }
+
+  .blog__placeholder {
+    font-style: italic;
+    color: var(--text-muted);
   }
 
   .blog__tags {
@@ -74,16 +144,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   }
 
   .blog__tag {
-    padding: 2px 8px;
+    padding: 3px 10px;
     background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 2px;
-    font-size: var(--text-xs);
-    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--text-secondary);
   }
 
-  .blog__placeholder {
-    color: var(--text-muted);
-    font-style: italic;
+  .blog__actions {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-xs);
+    padding-top: var(--space-sm);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .btn-sm {
+    padding: 6px 14px;
+    font-family: var(--font-pixel);
+    font-size: 16px;
+    font-weight: 600;
   }
 
   .blog__empty {

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 264 264" width="264" height="264">
+  <g transform="translate(0, 23)">
+    <!-- Red Top-Left Diagonal -->
+    <path d="M 27 2 L 115 46 Q 126 52 126 64 L 126 106 Q 126 119 114 113 L 26 69 Q 15 63 15 51 L 15 15 Q 15 2 27 2 Z" fill="#E63E19" />
+    <!-- Green Top-Right Diagonal -->
+    <path d="M 150 113 Q 138 119 138 106 L 138 64 Q 138 52 149 46 L 237 2 Q 249 2 249 15 L 249 51 Q 249 63 238 69 Z" fill="#7DB202" />
+    <!-- Blue Bottom-Left Pillar -->
+    <path d="M 3 82 Q 3 71 14 76 L 50 94 Q 61 100 61 112 L 61 202 Q 61 214 50 214 L 14 196 Q 3 190 3 179 Z" fill="#1998DB" />
+    <!-- Yellow Bottom-Right Pillar -->
+    <path d="M 250 76 Q 261 71 261 82 L 261 179 Q 261 190 250 196 L 214 214 Q 203 214 203 202 L 203 112 Q 203 100 214 94 Z" fill="#FCB001" />
+  </g>
+</svg>

@@ -52,3 +52,4 @@ export async function authenticateAdmin(credentials: AuthCredentials): Promise<A
     message: 'Backend auth service not yet connected. Configure API endpoint in src/scripts/auth.ts.',
   };
 }
+

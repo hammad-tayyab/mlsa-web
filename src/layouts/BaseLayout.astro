@@ -75,10 +75,10 @@ const allJsonLd = jsonLd ? [orgJsonLd, ...(Array.isArray(jsonLd) ? jsonLd : [jso
   <Cursor />
   <slot />
 
-  <!-- Animation layer loads after content (deferred) -->
+  <!-- Background interactive cursor field (dashes) -->
   <script>
-    // Placeholder for scroll engine initialization (Milestone 3)
-    console.log('[MSCLUB] Content loaded. Animation layer will initialize in Milestone 3.');
+    import { initCursorField } from '../scripts/cursor-field.js';
+    initCursorField();
   </script>
 </body>
 </html>

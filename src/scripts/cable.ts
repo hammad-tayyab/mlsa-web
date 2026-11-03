@@ -143,3 +143,4 @@ export class HeroCable {
     window.removeEventListener('resize', this.onResize);
   }
 }
+

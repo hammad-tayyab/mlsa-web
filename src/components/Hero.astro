@@ -6,34 +6,34 @@ import Cable from './Cable.astro';
 ---
 
 <section class="scene hero" id="home" aria-label="Hero">
-  <!-- Layer 0: Background Canvas Tile Grid (MS colors + Torch) -->
-  <TileGrid class="hero__tiles" />
+  <!-- Layer 0: Constellation particle background (replaces tile grid) -->
+  <canvas id="hero-constellation-canvas" class="hero__constellation" aria-hidden="true"></canvas>
 
-  <!-- Layer 1: Layered Vector Skyline Parallax (Hills, Panorama, Academic Block, Conifers) -->
-  <SkylineSVG class="hero__skyline" />
+  <!-- Layer 1: Abstract skyline -->
+  <SkylineSVG />
 
-  <!-- Layer 2: Centerpiece GIKI Clock Tower -->
+  <!-- Layer 2: Clock tower (centered at bottom) -->
   <div class="hero__tower-stage">
     <ClockTower class="hero__tower" />
   </div>
 
-  <!-- Layer 3: 4-Strand Interactive SVG Cable -->
+  <!-- Layer 3: Cable (behind text, z-index managed) -->
   <Cable class="hero__cable" />
 
-  <!-- Layer 4: Semantic Content Layer (Real accessible HTML text) -->
-  <div class="hero__content grid">
-    <div class="hero__text col-content">
-      <div class="hero__pill mono">
+  <!-- Layer 4: Content — split left so it doesn't overlap the tower -->
+  <div class="hero__content">
+    <div class="hero__text-block">
+      <div class="hero__pill label">
         <span class="hero__pill-dot" aria-hidden="true"></span>
         <span>The Clock Tower Never Sleeps</span>
       </div>
 
       <h1 class="hero__title">
-        <span class="hero__title-line">Microsoft Club</span>
-        <span class="hero__title-line">GIKI</span>
+        <span class="hero__title-line">Microsoft</span>
+        <span class="hero__title-line">Club <span class="hero__title-accent">GIKI</span></span>
       </h1>
 
-      <p class="hero__sub mono">Learn. Build. Lead.</p>
+      <p class="hero__sub">Learn. Build. Lead.</p>
 
       <div class="hero__ctas">
         <a href="#join" class="btn btn-primary">Join us</a>
@@ -42,8 +42,8 @@ import Cable from './Cable.astro';
     </div>
   </div>
 
-  <!-- Subtle gradient floor to ground the tower & skyline -->
-  <div class="hero__ground-fog" aria-hidden="true"></div>
+  <!-- Ground fog -->
+  <div class="hero__fog" aria-hidden="true"></div>
 </section>
 
 <style>
@@ -53,23 +53,23 @@ import Cable from './Cable.astro';
     height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
     overflow: hidden;
-    background: radial-gradient(circle at 50% 30%, var(--night-1) 0%, var(--night-0) 80%);
+    background: var(--night-0);
     padding-block: 0;
   }
 
-  .hero__tiles {
-    z-index: 2;
-  }
-
-  .hero__skyline {
-    z-index: 3;
+  .hero__constellation {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
   }
 
   .hero__tower-stage {
     position: absolute;
-    bottom: 2%;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
     z-index: var(--z-tower);
@@ -80,49 +80,50 @@ import Cable from './Cable.astro';
   }
 
   .hero__tower {
-    max-height: 65vh;
+    max-height: 58vh;
   }
 
   .hero__cable {
-    z-index: var(--z-cable);
+    z-index: 8; /* behind content z-index 100 */
   }
 
   .hero__content {
     position: relative;
     z-index: var(--z-content);
+    width: 100%;
+    max-width: var(--grid-max-width);
+    margin-inline: auto;
+    padding-inline: var(--grid-margin);
     pointer-events: none;
-    text-align: center;
-    margin-top: -8vh;
   }
 
-  .hero__text {
+  .hero__text-block {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: var(--space-md);
+    max-width: 520px;
+    pointer-events: auto;
   }
 
   .hero__pill {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 16px;
-    background: rgba(11, 18, 48, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 999px;
+    padding: 6px 14px;
+    background: rgba(11, 18, 48, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+    width: fit-content;
     font-size: var(--text-xs);
-    color: var(--text-secondary);
-    letter-spacing: 0.08em;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
   }
 
   .hero__pill-dot {
     width: 6px;
     height: 6px;
-    border-radius: 50%;
-    background-color: var(--ms-green);
-    box-shadow: 0 0 8px var(--ms-green);
+    background: var(--ms-green);
+    box-shadow: 0 0 6px var(--ms-green);
     animation: blink 2.5s infinite;
   }
 
@@ -132,21 +133,24 @@ import Cable from './Cable.astro';
   }
 
   .hero__title {
-    display: flex;
-    flex-direction: column;
-    line-height: 0.95;
+    line-height: 1;
     color: var(--text-primary);
-    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.85);
+    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9);
   }
 
   .hero__title-line {
     display: block;
   }
 
+  .hero__title-accent {
+    color: var(--ms-blue);
+  }
+
   .hero__sub {
-    font-size: var(--text-lg);
-    color: var(--text-secondary);
-    letter-spacing: 0.18em;
+    font-family: var(--font-pixel);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
     text-transform: uppercase;
   }
 
@@ -154,62 +158,68 @@ import Cable from './Cable.astro';
     display: flex;
     gap: var(--space-md);
     margin-top: var(--space-sm);
-    pointer-events: auto;
   }
 
-  .hero__ground-fog {
+  .hero__fog {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 180px;
+    height: 200px;
     background: linear-gradient(to top, var(--night-0) 0%, transparent 100%);
     z-index: 55;
     pointer-events: none;
   }
 
-  @media (max-width: 768px) {
-    .hero__content {
-      margin-top: -18vh;
+  @media (max-width: 1024px) {
+    .hero__text-block {
+      max-width: 100%;
+      align-items: center;
+      text-align: center;
+      margin-top: -28vh;
     }
 
     .hero__tower {
-      max-height: 48vh;
+      max-height: 42vh;
     }
+  }
 
+  @media (max-width: 768px) {
     .hero__ctas {
       flex-direction: column;
       width: 100%;
-      max-width: 260px;
+      max-width: 240px;
     }
   }
 </style>
 
 <script>
   import { TowerChime } from '../scripts/audio';
+  import { ConstellationCanvas } from '../scripts/constellation';
 
+  // Constellation particle background
+  const constellationCanvas = document.getElementById('hero-constellation-canvas') as HTMLCanvasElement;
+  if (constellationCanvas) {
+    new ConstellationCanvas(constellationCanvas);
+  }
+
+  // Easter egg: click tower to chime and spin hands
   const chime = new TowerChime();
   const tower = document.getElementById('hero-clock-tower');
 
   if (tower) {
     let isSpinning = false;
     tower.addEventListener('click', () => {
-      // 1. Play Web Audio chime
       chime.play();
-
-      // 2. Spin clock hands (Easter egg)
       if (!isSpinning) {
         isSpinning = true;
         const hourHand = document.getElementById('clock-hour-hand');
         const minHand = document.getElementById('clock-minute-hand');
-
         if (hourHand && minHand) {
           hourHand.style.transition = 'transform 2.2s cubic-bezier(0.2, 0.8, 0.2, 1)';
           minHand.style.transition = 'transform 2.2s cubic-bezier(0.2, 0.8, 0.2, 1)';
-
-          hourHand.style.transform = 'rotate(930deg)'; // 210 + 720
-          minHand.style.transform = 'rotate(2160deg)'; // 6 full rotations
-
+          hourHand.style.transform = 'rotate(930deg)';
+          minHand.style.transform = 'rotate(2160deg)';
           setTimeout(() => {
             hourHand.style.transition = 'transform 0.8s ease';
             minHand.style.transition = 'transform 0.8s ease';

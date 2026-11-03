@@ -120,3 +120,4 @@ export class CustomCursor {
     document.removeEventListener('mouseleave', this.onMouseLeave);
   }
 }
+

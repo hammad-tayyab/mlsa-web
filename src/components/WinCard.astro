@@ -1,0 +1,138 @@
+---
+/**
+ * Retro Windows-style card — blue title bar with pixelated title,
+ * thin dark border, window control buttons.
+ */
+interface Props {
+  title: string;
+  class?: string;
+  featured?: boolean;
+  dimmed?: boolean;
+  wide?: boolean;
+}
+
+const {
+  title,
+  class: className = '',
+  featured = false,
+  dimmed = false,
+  wide = false,
+} = Astro.props;
+---
+
+<article
+  class={`win-card ${featured ? 'win-card--featured' : ''} ${dimmed ? 'win-card--dimmed' : ''} ${wide ? 'win-card--wide' : ''} ${className}`}
+  role="listitem"
+>
+  <div class="win-card__titlebar">
+    <span class="win-card__title">{title}</span>
+    <div class="win-card__controls" aria-hidden="true">
+      <span class="win-card__btn win-card__btn--min">_</span>
+      <span class="win-card__btn win-card__btn--max">□</span>
+      <span class="win-card__btn win-card__btn--close">×</span>
+    </div>
+  </div>
+  <div class="win-card__body">
+    <slot />
+  </div>
+</article>
+
+<style>
+  .win-card {
+    border: 2px solid #1A2744;
+    background: var(--night-0);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .win-card--wide {
+    width: clamp(340px, 90vw, 560px) !important;
+  }
+
+  .win-card__titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 8px;
+    background: linear-gradient(90deg, #0055CC 0%, #0078D4 40%, #0055CC 100%);
+    min-height: 26px;
+    gap: 8px;
+  }
+
+  .win-card__title {
+    font-family: var(--font-pixel);
+    font-size: 11px;
+    color: #FFFFFF;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+  }
+
+  .win-card__controls {
+    display: flex;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .win-card__btn {
+    width: 18px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-pixel);
+    font-size: 10px;
+    color: #000;
+    background: #C0C0C0;
+    border-top: 1px solid #FFF;
+    border-left: 1px solid #FFF;
+    border-right: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+    line-height: 1;
+  }
+
+  .win-card__btn--close {
+    background: #C0C0C0;
+  }
+
+  .win-card__body {
+    flex: 1;
+    padding: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  /* Featured glow */
+  .win-card--featured {
+    border-color: var(--ms-yellow);
+    box-shadow: 0 0 20px rgba(255, 185, 0, 0.15), inset 0 0 30px rgba(255, 185, 0, 0.03);
+  }
+
+  .win-card--featured .win-card__titlebar {
+    background: linear-gradient(90deg, #B8860B 0%, #FFB900 40%, #B8860B 100%);
+  }
+
+  /* Dimmed (past events, alumni) */
+  .win-card--dimmed {
+    opacity: 0.55;
+    filter: saturate(0.6);
+    transition: opacity var(--duration-normal) var(--ease-out),
+                filter var(--duration-normal) var(--ease-out);
+  }
+
+  .win-card--dimmed:hover {
+    opacity: 0.85;
+    filter: saturate(0.9);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .win-card--dimmed:hover {
+      opacity: 0.55;
+      filter: saturate(0.6);
+    }
+  }
+</style>
+

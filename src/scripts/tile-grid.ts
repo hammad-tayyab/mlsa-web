@@ -289,3 +289,4 @@ export class TileGridCanvas {
     window.removeEventListener('touchend', this.handleTouchEnd);
   }
 }
+

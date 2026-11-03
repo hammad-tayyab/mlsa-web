@@ -55,5 +55,18 @@
       "linkedin": null
     }
   ],
-  "alumni": []
+  "alumni": [
+    {
+      "name": "Hamza Faraz",
+      "role": "Alumni / Former Lead",
+      "photo": null,
+      "linkedin": null
+    },
+    {
+      "name": "Muhammad Taimoor",
+      "role": "Alumni / Former Lead",
+      "photo": null,
+      "linkedin": null
+    }
+  ]
 }

@@ -1,0 +1,234 @@
+---
+/**
+ * <Rail> — Reusable horizontal scroll-snap carousel.
+ * CSS scroll-snap-type x mandatory, overflow-x auto, data-lenis-prevent,
+ * mouse drag on desktop, arrow buttons, progress bar, next card peeking.
+ * Keyboard accessible. Vertical page scroll stays normal.
+ */
+interface Props {
+  label: string;         // aria-label for the carousel
+  class?: string;
+  peek?: boolean;        // show next card peeking (default true)
+}
+
+const { label, class: className = '', peek = true } = Astro.props;
+---
+
+<div
+  class={`rail ${peek ? 'rail--peek' : ''} ${className}`}
+  data-lenis-prevent
+  role="region"
+  aria-label={label}
+  aria-roledescription="carousel"
+>
+  <div class="rail__track" role="list" tabindex="0">
+    <slot />
+  </div>
+
+  <div class="rail__controls">
+    <button class="rail__arrow rail__arrow--prev" aria-label="Previous" disabled>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M13 4L7 10L13 16" stroke="currentColor" stroke-width="2" stroke-linecap="square" />
+      </svg>
+    </button>
+    <div class="rail__progress" aria-hidden="true">
+      <div class="rail__progress-bar"></div>
+    </div>
+    <button class="rail__arrow rail__arrow--next" aria-label="Next">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="2" stroke-linecap="square" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<style>
+  .rail {
+    position: relative;
+    width: 100%;
+    overflow: visible;
+  }
+
+  .rail__track {
+    display: flex;
+    gap: var(--space-md);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-inline: var(--grid-margin);
+    padding-block: var(--space-sm);
+    cursor: grab;
+    outline: none;
+  }
+
+  .rail__track:active {
+    cursor: grabbing;
+  }
+
+  .rail__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Each direct child is a card slot */
+  .rail__track > :global(*) {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    width: clamp(300px, 85vw, 440px);
+  }
+
+  /* Peek: pad right so next card shows */
+  .rail--peek .rail__track {
+    padding-right: calc(100vw - clamp(300px, 85vw, 440px) - var(--grid-margin));
+  }
+
+  .rail__controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding-inline: var(--grid-margin);
+    margin-top: var(--space-md);
+  }
+
+  .rail__arrow {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(11, 18, 48, 0.6);
+    font-family: var(--font-pixel);
+    transition: color var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out);
+  }
+
+  .rail__arrow:hover:not(:disabled) {
+    color: var(--text-primary);
+    border-color: var(--ms-blue);
+  }
+
+  .rail__arrow:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .rail__progress {
+    flex: 1;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+  }
+
+  .rail__progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--ms-blue);
+    transition: width 0.15s var(--ease-out);
+  }
+
+  /* Focus ring on keyboard nav */
+  .rail__track:focus-visible {
+    outline: 2px solid var(--ms-blue);
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rail__track {
+      scroll-behavior: auto;
+    }
+  }
+</style>
+
+<script>
+  // Rail controller: drag, arrows, progress, keyboard
+  class RailController {
+    private track: HTMLElement;
+    private prevBtn: HTMLButtonElement;
+    private nextBtn: HTMLButtonElement;
+    private progressBar: HTMLElement;
+    private isDragging = false;
+    private startX = 0;
+    private scrollStart = 0;
+
+    constructor(rail: HTMLElement) {
+      this.track = rail.querySelector('.rail__track')!;
+      this.prevBtn = rail.querySelector('.rail__arrow--prev')! as HTMLButtonElement;
+      this.nextBtn = rail.querySelector('.rail__arrow--next')! as HTMLButtonElement;
+      this.progressBar = rail.querySelector('.rail__progress-bar')!;
+
+      this.init();
+    }
+
+    private init() {
+      // Scroll updates
+      this.track.addEventListener('scroll', () => this.updateUI(), { passive: true });
+
+      // Arrow buttons
+      this.prevBtn.addEventListener('click', () => this.scrollBy(-1));
+      this.nextBtn.addEventListener('click', () => this.scrollBy(1));
+
+      // Mouse drag (desktop)
+      this.track.addEventListener('mousedown', (e) => this.onDragStart(e));
+      window.addEventListener('mousemove', (e) => this.onDragMove(e));
+      window.addEventListener('mouseup', () => this.onDragEnd());
+
+      // Keyboard navigation
+      this.track.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); this.scrollBy(1); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); this.scrollBy(-1); }
+      });
+
+      this.updateUI();
+    }
+
+    private scrollBy(direction: number) {
+      const cards = Array.from(this.track.children) as HTMLElement[];
+      if (!cards.length) return;
+      const cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(this.track).gap || '16');
+      this.track.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+    }
+
+    private updateUI() {
+      const { scrollLeft, scrollWidth, clientWidth } = this.track;
+      const maxScroll = scrollWidth - clientWidth;
+
+      // Buttons
+      this.prevBtn.disabled = scrollLeft <= 2;
+      this.nextBtn.disabled = scrollLeft >= maxScroll - 2;
+
+      // Progress
+      const pct = maxScroll > 0 ? (scrollLeft / maxScroll) * 100 : 0;
+      this.progressBar.style.width = `${Math.min(100, pct)}%`;
+    }
+
+    private onDragStart(e: MouseEvent) {
+      this.isDragging = true;
+      this.startX = e.clientX;
+      this.scrollStart = this.track.scrollLeft;
+      this.track.style.cursor = 'grabbing';
+      this.track.style.userSelect = 'none';
+    }
+
+    private onDragMove(e: MouseEvent) {
+      if (!this.isDragging) return;
+      const dx = e.clientX - this.startX;
+      this.track.scrollLeft = this.scrollStart - dx;
+    }
+
+    private onDragEnd() {
+      if (!this.isDragging) return;
+      this.isDragging = false;
+      this.track.style.cursor = '';
+      this.track.style.userSelect = '';
+    }
+  }
+
+  // Init all rails on the page
+  document.querySelectorAll<HTMLElement>('.rail').forEach((el) => {
+    new RailController(el);
+  });
+</script>
+

@@ -32,8 +32,9 @@
   --sky-current: var(--night-1);
 
   /* ---- Typography ---- */
-  --font-display: 'Bricolage Grotesque', sans-serif;
-  --font-body: 'Instrument Sans', sans-serif;
+  --font-pixel: 'Pixelify Sans', 'Press Start 2P', cursive;
+  --font-display: 'Pixelify Sans', 'Press Start 2P', cursive;
+  --font-body: 'Instrument Sans', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Fluid type scale */

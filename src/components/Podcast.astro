@@ -1,111 +1,243 @@
 ---
 import episodes from '../content/episodes.json';
-const latest = episodes[0];
-const others = episodes.slice(1);
+import Rail from './Rail.astro';
+import WinCard from './WinCard.astro';
 ---
 
 <section class="scene podcast" id="podcast" aria-label="Podcast">
-  <div class="podcast__inner grid">
-    <div class="podcast__header col-content">
+  <div class="podcast__header grid">
+    <div class="col-content">
       <span class="label">2:00 AM</span>
-      <h2>Logikal.</h2>
-      <p>The podcast where GIKI talks tech, career, and campus life.</p>
+      <h2>Logikal Podcast.</h2>
+      <p class="podcast__subtitle">Late-night studio conversations on tech, startups, and campus life at GIKI.</p>
     </div>
+  </div>
 
-    {latest && (
-      <article class="podcast__latest col-content">
-        <span class="label">Latest Episode</span>
-        <h3>EP{String(latest.ep).padStart(3, '0')} — {latest.title}</h3>
-        {latest.guest && <p class="podcast__guest">with {latest.guest}</p>}
-        {latest.date && <time class="mono" datetime={latest.date}>{latest.date}</time>}
-        <p>{latest.summary}</p>
-        {latest.youtubeId ? (
-          <div class="podcast__player asset-placeholder">
-            YouTube Player: {latest.youtubeId}
-          </div>
-        ) : (
-          <div class="podcast__player asset-placeholder">
-            YOUTUBE ID NEEDED: Episode {latest.ep}
-          </div>
-        )}
-      </article>
-    )}
+  <div class="podcast__rail-wrapper">
+    <Rail label="Logikal Podcast Episodes">
+      {episodes.map(ep => {
+        const epNum = String(ep.ep).padStart(3, '0');
+        const isLatest = ep.ep === 13;
 
-    <div class="podcast__archive col-content">
-      <h4>Archive</h4>
-      <ol class="podcast__episodes" reversed>
-        {others.map(ep => (
-          <li class="podcast__episode">
-            <a href={`/podcast/${ep.slug}`}>
-              <span class="mono">EP{String(ep.ep).padStart(3, '0')}</span>
-              <span>{ep.title}</span>
-            </a>
-          </li>
-        ))}
-      </ol>
-    </div>
+        return (
+          <WinCard
+            title={`Logikal_EP${epNum}.exe`}
+            featured={isLatest}
+          >
+            <div class="episode-card-body" data-ep={ep.ep}>
+              <div class="episode-top">
+                <span class="label ep-badge">EP.{epNum} {isLatest ? '★ Latest' : ''}</span>
+                {ep.date && <time class="mono ep-date" datetime={ep.date}>{ep.date}</time>}
+              </div>
+
+              <h3 class="episode-title">
+                <a href={`/podcast/${ep.slug}`}>{ep.title}</a>
+              </h3>
+
+              {ep.guest && (
+                <p class="episode-guest label">
+                  Guest: <span class="guest-name">{ep.guest}</span>
+                </p>
+              )}
+
+              <p class="episode-summary">{ep.summary}</p>
+
+              <!-- Inline Player Container -->
+              <div class="inline-player-slot" id={`player-slot-${ep.ep}`}>
+                <div class="retro-waveform" aria-hidden="true">
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                  <span class="wave-bar"></span>
+                </div>
+              </div>
+
+              <div class="episode-actions">
+                <button
+                  type="button"
+                  class="btn btn-primary btn-sm play-btn"
+                  data-ep={ep.ep}
+                  data-youtube={ep.youtubeId || ''}
+                  data-title={ep.title}
+                >
+                  ▶ Play Inline
+                </button>
+                <a href={`/podcast/${ep.slug}`} class="btn btn-ghost btn-sm">
+                  Details &rarr;
+                </a>
+              </div>
+            </div>
+          </WinCard>
+        );
+      })}
+    </Rail>
   </div>
 </section>
 
 <style>
+  .podcast {
+    overflow: hidden;
+  }
+
   .podcast__header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .podcast__subtitle {
+    margin-top: var(--space-xs);
+    color: var(--text-muted);
+  }
+
+  .podcast__rail-wrapper {
+    width: 100%;
+  }
+
+  .episode-card-body {
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
+    height: 100%;
+    justify-content: space-between;
   }
 
-  .podcast__latest {
+  .episode-top {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    margin-top: var(--space-xl);
-    padding: var(--space-lg);
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 4px;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  .podcast__latest h3 {
-    font-size: var(--text-xl);
+  .ep-badge {
+    color: var(--ms-blue);
+    font-size: 11px;
+    letter-spacing: 0.05em;
   }
 
-  .podcast__guest {
-    color: var(--text-secondary);
-    font-style: italic;
+  .ep-date {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
   }
 
-  .podcast__player {
-    margin-top: var(--space-md);
-    aspect-ratio: 16/9;
-    max-width: 640px;
+  .episode-title {
+    font-size: var(--text-lg);
+    line-height: 1.25;
   }
 
-  .podcast__archive {
-    margin-top: var(--space-xl);
-  }
-
-  .podcast__episodes {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    margin-top: var(--space-md);
-  }
-
-  .podcast__episode a {
-    display: flex;
-    gap: var(--space-md);
-    padding: var(--space-sm) 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    color: var(--text-secondary);
+  .episode-title a {
+    color: var(--text-primary);
     transition: color var(--duration-fast) var(--ease-out);
   }
 
-  .podcast__episode a:hover {
-    color: var(--text-primary);
+  .episode-title a:hover {
+    color: var(--ms-yellow);
   }
 
-  .podcast__episode .mono {
+  .episode-guest {
+    font-size: 11px;
     color: var(--text-muted);
-    flex-shrink: 0;
+  }
+
+  .guest-name {
+    color: var(--ms-green);
+  }
+
+  .episode-summary {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  /* Retro waveform display */
+  .retro-waveform {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 24px;
+    padding: 4px 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+  }
+
+  .wave-bar {
+    flex: 1;
+    background: var(--ms-blue);
+    border-radius: 1px;
+    height: 20%;
+    transition: height 0.2s ease;
+  }
+
+  .is-playing .wave-bar {
+    animation: wavePulse 0.8s ease-in-out infinite alternate;
+  }
+
+  .is-playing .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+  .is-playing .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+  .is-playing .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+  .is-playing .wave-bar:nth-child(5) { animation-delay: 0.15s; }
+  .is-playing .wave-bar:nth-child(6) { animation-delay: 0.25s; }
+  .is-playing .wave-bar:nth-child(7) { animation-delay: 0.05s; }
+  .is-playing .wave-bar:nth-child(8) { animation-delay: 0.35s; }
+
+  @keyframes wavePulse {
+    0% { height: 15%; background: var(--ms-blue); }
+    100% { height: 90%; background: var(--ms-yellow); }
+  }
+
+  .inline-player-frame {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: none;
+    border-radius: 2px;
+    margin-top: 6px;
+  }
+
+  .episode-actions {
+    display: flex;
+    gap: var(--space-sm);
+    margin-top: var(--space-xs);
+    padding-top: var(--space-sm);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .btn-sm {
+    padding: 4px 12px;
+    font-size: var(--text-xs);
   }
 </style>
+
+<script>
+  // Inline player logic for Logikal podcast episodes
+  document.querySelectorAll('.play-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const ep = btn.getAttribute('data-ep');
+      const ytId = btn.getAttribute('data-youtube');
+      const slot = document.getElementById(`player-slot-${ep}`);
+      if (!slot) return;
+
+      const card = btn.closest('.episode-card-body');
+
+      if (ytId) {
+        // Embed real YouTube player
+        slot.innerHTML = `<iframe class="inline-player-frame" src="https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+        btn.textContent = '■ Playing...';
+      } else {
+        // Toggle retro animated waveform simulation
+        const isPlaying = card?.classList.contains('is-playing');
+        if (isPlaying) {
+          card?.classList.remove('is-playing');
+          btn.textContent = '▶ Play Inline';
+        } else {
+          document.querySelectorAll('.episode-card-body').forEach(c => c.classList.remove('is-playing'));
+          document.querySelectorAll('.play-btn').forEach(b => b.textContent = '▶ Play Inline');
+          card?.classList.add('is-playing');
+          btn.textContent = '⏸ Pause';
+        }
+      }
+    });
+  });
+</script>

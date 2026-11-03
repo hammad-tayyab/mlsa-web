@@ -1,76 +1,179 @@
 ---
 import eventsData from '../content/events.json';
-
-const featured = eventsData.filter(e => e.status === 'featured');
-const past = eventsData.filter(e => e.status === 'past');
-const upcoming = eventsData.filter(e => e.status === 'upcoming');
+import Rail from './Rail.astro';
+import WinCard from './WinCard.astro';
 ---
 
 <section class="scene events" id="events" aria-label="Events">
-  <div class="events__inner grid">
-    <div class="events__header col-content">
+  <div class="events__header grid">
+    <div class="col-content">
       <span class="label">1:00 AM</span>
-      <h2>Events.</h2>
+      <h2>Events & Hackathons.</h2>
+      <p class="events__subtitle">Noticeboard of past sessions, flagship hackathons, and upcoming nights.</p>
     </div>
-    <div class="events__list col-content">
-      {featured.map(event => (
-        <article class="events__card events__card--featured">
-          <h3><a href={`/events/${event.slug}`}>{event.title}</a></h3>
-          <time class="mono" datetime={event.date}>{event.date}</time>
-          <p>{event.summary}</p>
-          {event.poster === null && (
-            <div class="asset-placeholder">POSTER NEEDED: {event.title}</div>
-          )}
-        </article>
-      ))}
-      {[...past, ...upcoming].map(event => (
-        <article class="events__card">
-          <h3><a href={`/events/${event.slug}`}>{event.title}</a></h3>
-          {event.date && <time class="mono" datetime={event.date}>{event.date}</time>}
-          {!event.date && <span class="mono label">Date TBD</span>}
-          <p>{event.summary}</p>
-        </article>
-      ))}
-    </div>
+  </div>
+
+  <div class="events__rail-wrapper">
+    <Rail label="Events Noticeboard">
+      {eventsData.map(event => {
+        const isFeatured = event.status === 'featured';
+        const isPast = event.status === 'past';
+        const isUpcoming = event.status === 'upcoming';
+
+        return (
+          <WinCard
+            title={`${event.slug}.exe`}
+            featured={isFeatured}
+            dimmed={isPast}
+            wide={isFeatured}
+          >
+            <div class="event-card-body">
+              <div class="event-meta">
+                <span class={`status-badge label ${isFeatured ? 'status-featured' : isPast ? 'status-past' : 'status-upcoming'}`}>
+                  {isFeatured ? '★ Flagship' : isPast ? 'Past Event' : 'Upcoming'}
+                </span>
+                {event.date ? (
+                  <time class="event-date mono" datetime={event.date}>{event.date}</time>
+                ) : (
+                  <span class="event-date mono">Date TBD</span>
+                )}
+              </div>
+
+              <h3 class="event-title">
+                <a href={`/events/${event.slug}`}>{event.title}</a>
+              </h3>
+
+              <p class="event-summary">{event.summary}</p>
+
+              {event.tags && event.tags.length > 0 && (
+                <div class="event-tags">
+                  {event.tags.map((tag: string) => (
+                    <span class="tag-pill label">{tag}</span>
+                  ))}
+                </div>
+              )}
+
+              <div class="event-actions">
+                <a href={`/events/${event.slug}`} class={`btn btn-sm ${isFeatured ? 'btn-primary' : 'btn-ghost'}`}>
+                  {isFeatured ? 'Explore Micathon' : 'View Event'} &rarr;
+                </a>
+              </div>
+            </div>
+          </WinCard>
+        );
+      })}
+    </Rail>
   </div>
 </section>
 
 <style>
+  .events {
+    overflow: hidden;
+  }
+
   .events__header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .events__subtitle {
+    margin-top: var(--space-xs);
+    color: var(--text-muted);
+  }
+
+  .events__rail-wrapper {
+    width: 100%;
+  }
+
+  .event-card-body {
     display: flex;
     flex-direction: column;
     gap: var(--space-sm);
+    height: 100%;
+    justify-content: space-between;
   }
 
-  .events__list {
+  .event-meta {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
-    margin-top: var(--space-xl);
-  }
-
-  .events__card {
-    display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     gap: var(--space-sm);
-    padding: var(--space-lg);
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 4px;
   }
 
-  .events__card--featured {
-    border-color: var(--ms-yellow);
-    background: rgba(255, 185, 0, 0.03);
+  .status-badge {
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-size: 10px;
+    letter-spacing: 0.05em;
   }
 
-  .events__card h3 a {
-    color: var(--text-primary);
-    font-size: var(--text-xl);
+  .status-featured {
+    background: rgba(255, 185, 0, 0.2);
+    color: var(--ms-yellow);
+    border: 1px solid var(--ms-yellow);
   }
 
-  .events__card time, .events__card .label {
+  .status-past {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-muted);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .status-upcoming {
+    background: rgba(0, 164, 239, 0.15);
+    color: var(--ms-blue);
+    border: 1px solid var(--ms-blue);
+  }
+
+  .event-date {
     font-size: var(--text-xs);
     color: var(--text-muted);
+  }
+
+  .event-title {
+    font-size: var(--text-xl);
+    line-height: 1.2;
+  }
+
+  .event-title a {
+    color: var(--text-primary);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .event-title a:hover {
+    color: var(--ms-blue);
+  }
+
+  .event-summary {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  .event-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: var(--space-xs);
+  }
+
+  .tag-pill {
+    padding: 2px 6px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
+    font-size: 9px;
+    color: var(--text-muted);
+  }
+
+  .event-actions {
+    margin-top: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .btn-sm {
+    padding: 4px 12px;
+    font-size: var(--text-xs);
   }
 </style>
